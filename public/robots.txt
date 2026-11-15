@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Private / account areas (no value in search results)
+Disallow: /admin/
+Disallow: /customer/
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+
+# Uncomment and set your real domain once the site is live:
+# Sitemap: https://www.your-domain.com/sitemap.xml
