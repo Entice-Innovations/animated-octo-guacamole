@@ -1,5 +1,5 @@
 import logo from "@/assets/brand/logo1.png";
-import "../styles/components/Footer.css";
+import "./Footer.css";
 
 function Footer() {
   const scrollToTop = () => {

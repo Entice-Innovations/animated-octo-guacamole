@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import aboutImage from "@/assets/about/about1.jpeg";
-import "../styles/components/About.css";
+import "./About.css";
 function About() {
   const sectionRef = useRef(null);
 

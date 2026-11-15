@@ -1,4 +1,4 @@
-import "../styles/components/Services.css";
+import "./Services.css";
 
 import engagement from "@/assets/services/engagement.jpeg";
 import bridal from "@/assets/services/bridal.jpeg";
