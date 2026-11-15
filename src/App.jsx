@@ -4,7 +4,7 @@ import Home from "@/features/home/pages/Home";
 import Login from "@/features/auth/pages/Login";
 import Signup from "@/features/auth/pages/Signup";
 import ForgotPassword from "@/features/auth/pages/ForgotPassword";
-import CustomerDashboard from "./pages/customer/CustomerDashboard";
+import CustomerDashboard from "@/features/customer/pages/CustomerDashboard";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import "./App.css";

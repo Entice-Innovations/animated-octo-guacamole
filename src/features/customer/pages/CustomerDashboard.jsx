@@ -3,13 +3,13 @@ import {
   getCustomerProfile,
   createRazorpayOrder,
   verifyRazorpayPayment,
-} from "../../services/dashboardService";
+} from "@/features/customer/services/dashboardService";
 
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import logo from "@/assets/brand/logo1.png";
-import "../../styles/pages/CustomerDashboard.css";
+import "./CustomerDashboard.css";
 
 // =====================================================
 // LOAD RAZORPAY CHECKOUT
