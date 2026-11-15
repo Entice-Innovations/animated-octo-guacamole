@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Contact.css";
-// import { submitEnquiry } from "@/features/enquiries/services/enquiryService";
+// import { submitEnquiry } from "@/services/enquiryService";
 
 function Contact() {
   const [submitting, setSubmitting] = useState(false);

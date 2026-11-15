@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminLogin.css";
 
-import { apiRequest } from "@/features/admin/services/adminService";
+import { apiRequest } from "@/services/adminService";
 
 function AdminLogin() {
   const navigate = useNavigate();

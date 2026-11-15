@@ -3,19 +3,16 @@ import { render, screen, cleanup } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import { AppRoutes } from "./App";
-import { getCustomerProfile } from "@/features/customer/services/dashboardService";
-import { apiRequest } from "@/features/admin/services/adminService";
+import { getCustomerProfile } from "@/services/dashboardService";
+import { apiRequest } from "@/services/adminService";
 
 // Keep the real exports (API_URL etc.), replace only the network calls.
-vi.mock(
-  "@/features/customer/services/dashboardService",
-  async (importOriginal) => ({
-    ...(await importOriginal()),
-    getCustomerProfile: vi.fn(),
-  }),
-);
+vi.mock("@/services/dashboardService", async (importOriginal) => ({
+  ...(await importOriginal()),
+  getCustomerProfile: vi.fn(),
+}));
 
-vi.mock("@/features/admin/services/adminService", async (importOriginal) => ({
+vi.mock("@/services/adminService", async (importOriginal) => ({
   ...(await importOriginal()),
   apiRequest: vi.fn(),
 }));

@@ -3,7 +3,7 @@ import {
   getCustomerProfile,
   createRazorpayOrder,
   verifyRazorpayPayment,
-} from "@/features/customer/services/dashboardService";
+} from "@/services/dashboardService";
 
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";

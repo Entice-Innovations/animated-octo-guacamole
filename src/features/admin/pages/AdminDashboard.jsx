@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 import logo from "@/assets/brand/logo.png";
 
-import { API_URL, apiRequest } from "@/features/admin/services/adminService";
+import { API_URL, apiRequest } from "@/services/adminService";
 
 const emptyCustomer = { name: "", email: "", phone: "", password: "" };
 const emptyProject = {

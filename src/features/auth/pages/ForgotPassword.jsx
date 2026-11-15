@@ -7,7 +7,7 @@ import {
   sendPasswordResetOtp,
   verifyPasswordResetOtp,
   resetCustomerPassword,
-} from "@/features/auth/services/customerService";
+} from "@/services/customerService";
 
 function ForgotPassword() {
   const navigate = useNavigate();
