@@ -1,15 +1,15 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
 
   // General JavaScript rules
   {
-    files: ['**/*.{js,jsx}'],
+    files: ["**/*.{js,jsx}"],
     extends: [js.configs.recommended],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
@@ -18,11 +18,8 @@ export default defineConfig([
 
   // React frontend
   {
-    files: ['src/**/*.{js,jsx}'],
-    extends: [
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
+    files: ["src/**/*.{js,jsx}"],
+    extends: [reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
     languageOptions: {
       globals: globals.browser,
     },
@@ -30,7 +27,7 @@ export default defineConfig([
 
   // Node.js backend
   {
-    files: ['backend/**/*.{js,cjs,mjs}'],
+    files: ["backend/**/*.{js,cjs,mjs}"],
     languageOptions: {
       globals: globals.node,
     },
@@ -38,9 +35,9 @@ export default defineConfig([
 
   // Root-level Node.js configuration files
   {
-    files: ['*.config.{js,cjs,mjs}'],
+    files: ["*.config.{js,cjs,mjs}"],
     languageOptions: {
       globals: globals.node,
     },
   },
-])
+]);
