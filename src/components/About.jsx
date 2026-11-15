@@ -1,6 +1,5 @@
-
 import { useEffect, useRef } from "react";
-import aboutImage from "../assets/about1.jpeg";
+import aboutImage from "@/assets/about/about1.jpeg";
 import "../styles/components/About.css";
 function About() {
   const sectionRef = useRef(null);
@@ -29,7 +28,6 @@ function About() {
 
   return (
     <section className="about-section" id="about" ref={sectionRef}>
-
       {/* BACKGROUND */}
       <div className="about-bg-number">01</div>
       <div className="about-orb orb-one"></div>
@@ -46,35 +44,27 @@ function About() {
       </div>
 
       <div className="about-container">
-
         {/* IMAGE SIDE */}
         <div className="about-image-wrapper">
-
           <div className="about-image-frame frame-one"></div>
           <div className="about-image-frame frame-two"></div>
 
           <div className="about-image">
-
             <img
               src={aboutImage}
               alt="Infinity Pixel Studios wedding photography"
             />
 
             <div className="image-shine"></div>
-
           </div>
-
 
           {/* IMAGE CORNER */}
           <div className="image-corner top"></div>
           <div className="image-corner bottom"></div>
-
         </div>
-
 
         {/* CONTENT */}
         <div className="about-content">
-
           <div className="about-eyebrow">
             <span></span>
             <p>ABOUT INFINITY PIXEL STUDIOS</p>
@@ -87,23 +77,20 @@ function About() {
           </h2>
 
           <p className="about-intro">
-            Your story deserves more than just photographs.
-            It deserves to be felt, remembered, and relived.
+            Your story deserves more than just photographs. It deserves to be
+            felt, remembered, and relived.
           </p>
 
           <p className="about-description">
-            At Infinity Pixel Studios, we transform real emotions,
-            beautiful details, and unforgettable moments into
-            timeless visual stories. From intimate weddings and
-            engagements to maternity, celebrations, and special
-            events, we capture every chapter with creativity,
+            At Infinity Pixel Studios, we transform real emotions, beautiful
+            details, and unforgettable moments into timeless visual stories.
+            From intimate weddings and engagements to maternity, celebrations,
+            and special events, we capture every chapter with creativity,
             authenticity, and care.
           </p>
 
-
           {/* FEATURES */}
           <div className="about-features">
-
             <div className="about-feature">
               <span className="feature-number">01</span>
 
@@ -112,7 +99,6 @@ function About() {
                 <p>Real emotions, naturally captured.</p>
               </div>
             </div>
-
 
             <div className="about-feature">
               <span className="feature-number">02</span>
@@ -123,7 +109,6 @@ function About() {
               </div>
             </div>
 
-
             <div className="about-feature">
               <span className="feature-number">03</span>
 
@@ -132,49 +117,31 @@ function About() {
                 <p>Every little moment matters.</p>
               </div>
             </div>
-
           </div>
-
 
           {/* BUTTON */}
           <a href="#services" className="about-button">
-
             <span>Discover Our Approach</span>
 
-            <span className="about-button-arrow">
-              ↗
-            </span>
-
+            <span className="about-button-arrow">↗</span>
           </a>
-
         </div>
-
       </div>
-
 
       {/* BOTTOM INFO */}
       <div className="about-bottom">
-
         <div className="about-stat">
-
           <strong>01</strong>
 
           <span>OUR STORY</span>
-
         </div>
 
         <div className="about-line"></div>
 
-        <p>
-          Creating photographs that become
-          part of your story forever.
-        </p>
-
+        <p>Creating photographs that become part of your story forever.</p>
       </div>
-
     </section>
   );
 }
 
 export default About;
-

@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo1.png";
+import logo from "@/assets/brand/logo1.png";
 import "../styles/pages/ForgotPassword.css";
 
 import {
@@ -66,10 +65,7 @@ function ForgotPassword() {
     try {
       setLoading(true);
 
-      const data = await verifyPasswordResetOtp(
-        loginValue.trim(),
-        otp.trim()
-      );
+      const data = await verifyPasswordResetOtp(loginValue.trim(), otp.trim());
 
       setResetToken(data.resetToken);
       setMessage("OTP verified successfully.");
@@ -99,15 +95,9 @@ function ForgotPassword() {
     try {
       setLoading(true);
 
-      await resetCustomerPassword(
-        loginValue.trim(),
-        resetToken,
-        newPassword
-      );
+      await resetCustomerPassword(loginValue.trim(), resetToken, newPassword);
 
-      setMessage(
-        "Password reset successfully. Redirecting to login..."
-      );
+      setMessage("Password reset successfully. Redirecting to login...");
 
       setTimeout(() => {
         navigate("/login");
@@ -143,7 +133,6 @@ function ForgotPassword() {
   return (
     <div className="forgot-page">
       <div className="forgot-card">
-
         {/* BRAND */}
         <div className="forgot-brand">
           <div className="brand-mark">
@@ -161,10 +150,7 @@ function ForgotPassword() {
           <>
             <div className="forgot-heading">
               <h2>Forgot Password?</h2>
-              <p>
-                Enter your registered email address
-                to reset your password.
-              </p>
+              <p>Enter your registered email address to reset your password.</p>
             </div>
 
             <form onSubmit={handleSendOtp} className="forgot-form">
@@ -207,8 +193,7 @@ function ForgotPassword() {
             <div className="forgot-heading">
               <h2>Verify OTP</h2>
               <p>
-                Enter the 6-digit OTP sent to your
-                registered email address.
+                Enter the 6-digit OTP sent to your registered email address.
               </p>
             </div>
 
@@ -219,9 +204,7 @@ function ForgotPassword() {
                 type="text"
                 value={otp}
                 onChange={(e) =>
-                  setOtp(
-                    e.target.value.replace(/\D/g, "").slice(0, 6)
-                  )
+                  setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
                 }
                 placeholder="000000"
                 maxLength={6}
@@ -261,8 +244,8 @@ function ForgotPassword() {
             <div className="forgot-heading">
               <h2>Create New Password</h2>
               <p>
-                Your OTP has been verified.
-                Create a new password for your account.
+                Your OTP has been verified. Create a new password for your
+                account.
               </p>
             </div>
 
@@ -309,11 +292,17 @@ function ForgotPassword() {
 
         {/* PROGRESS */}
         <div className="forgot-progress">
-          <span className={step >= 1 ? "progress-dot active" : "progress-dot"} />
+          <span
+            className={step >= 1 ? "progress-dot active" : "progress-dot"}
+          />
           <span className="progress-line" />
-          <span className={step >= 2 ? "progress-dot active" : "progress-dot"} />
+          <span
+            className={step >= 2 ? "progress-dot active" : "progress-dot"}
+          />
           <span className="progress-line" />
-          <span className={step >= 3 ? "progress-dot active" : "progress-dot"} />
+          <span
+            className={step >= 3 ? "progress-dot active" : "progress-dot"}
+          />
         </div>
 
         {/* FOOTER */}
@@ -321,7 +310,6 @@ function ForgotPassword() {
           <span>Remember your password?</span>
           <Link to="/login">Login</Link>
         </div>
-
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
 :root {
   --admin-ivory: #f8f5ef;
   --admin-cream: #eee7da;
@@ -545,15 +545,15 @@
     font-size: 17px;
   }
 
-.brand-mark {
-  width: 60px;
-  height: 38px;
-}
+  .brand-mark {
+    width: 60px;
+    height: 38px;
+  }
 
-.brand-mark img {
-  width: 58px;
-  max-height: 38px;
-}
+  .brand-mark img {
+    width: 58px;
+    max-height: 38px;
+  }
 
   .admin-login-heading h2 {
     font-size: 32px;
@@ -583,7 +583,6 @@
     transition: none;
   }
 }
-
 
 /* ==========================================
    INFINITY PIXEL STUDIOS

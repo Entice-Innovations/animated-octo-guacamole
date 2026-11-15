@@ -1,12 +1,8 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo1.png";
+import logo from "@/assets/brand/logo1.png";
 import "../styles/pages/Signup.css";
-import {
-  registerCustomer,
-  loginCustomer,
-} from "../services/customerService";
+import { registerCustomer, loginCustomer } from "../services/customerService";
 
 function Signup() {
   const navigate = useNavigate();
@@ -50,8 +46,7 @@ function Signup() {
       });
 
       let token = registerData.token;
-      let customer =
-        registerData.customer || registerData.data?.customer;
+      let customer = registerData.customer || registerData.data?.customer;
 
       let customerId =
         customer?._id ||
@@ -64,13 +59,12 @@ function Signup() {
         let loginData;
 
         try {
-          loginData = await loginCustomer(
-            email.trim().toLowerCase(),
-            password
-          );
-        } catch (loginError) {
+          loginData = await loginCustomer(email.trim().toLowerCase(), password);
+          // why in catch we are writing sucess message ?
+          // } catch (loginError) {
+        } catch {
           setSuccess(
-            "Your account was created successfully. Please sign in to continue."
+            "Your account was created successfully. Please sign in to continue.",
           );
           return;
         }
@@ -79,16 +73,13 @@ function Signup() {
         customer = loginData.customer || customer;
 
         customerId =
-          customer?._id ||
-          customer?.id ||
-          loginData.id ||
-          loginData.customerId;
+          customer?._id || customer?.id || loginData.id || loginData.customerId;
       }
 
       // Step 3: Save session and navigate to dashboard.
       if (!token || !customerId) {
         setSuccess(
-          "Your account was created successfully. Please sign in to continue."
+          "Your account was created successfully. Please sign in to continue.",
         );
         return;
       }
@@ -111,16 +102,14 @@ function Signup() {
       localStorage.setItem("customer", JSON.stringify(customer || {}));
 
       navigate("/customer/dashboard", { replace: true });
-
     } catch (err) {
       console.error("Signup error:", err);
 
       setError(
         err instanceof TypeError
           ? "Cannot connect to the server. Please check that the backend is running."
-          : err.message || "Something went wrong. Please try again."
+          : err.message || "Something went wrong. Please try again.",
       );
-
     } finally {
       setLoading(false);
     }
@@ -155,8 +144,8 @@ function Signup() {
           </h1>
 
           <p className="login-visual-description">
-            Create your client account to access your photography,
-            projects, payments and important documents in one place.
+            Create your client account to access your photography, projects,
+            payments and important documents in one place.
           </p>
 
           <div className="login-line" />
@@ -264,12 +253,8 @@ function Signup() {
                 <button
                   type="button"
                   className="password-toggle"
-                  onClick={() =>
-                    setShowPassword((previous) => !previous)
-                  }
-                  aria-label={
-                    showPassword ? "Hide password" : "Show password"
-                  }
+                  onClick={() => setShowPassword((previous) => !previous)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? "HIDE" : "SHOW"}
                 </button>
@@ -315,11 +300,7 @@ function Signup() {
             )}
 
             {!success && (
-              <button
-                type="submit"
-                className="login-submit"
-                disabled={loading}
-              >
+              <button type="submit" className="login-submit" disabled={loading}>
                 <span>
                   {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
                 </span>

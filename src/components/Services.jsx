@@ -1,13 +1,13 @@
 import "../styles/components/Services.css";
 
-import engagement from "../assets/engagement.jpeg";
-import bridal from "../assets/bridal.jpeg";
-import coupleshoot from "../assets/coupleshoot.jpeg";
-import baby from "../assets/baby.jpeg";
-import portraits from "../assets/portraits.jpeg";
-import event from "../assets/EVENT.jpeg";
-import maternity from "../assets/MATERNITY.jpeg";
-import fashion from "../assets/fashion.jpeg";
+import engagement from "@/assets/services/engagement.jpeg";
+import bridal from "@/assets/services/bridal.jpeg";
+import coupleshoot from "@/assets/services/coupleshoot.jpeg";
+import baby from "@/assets/services/baby.jpeg";
+import portraits from "@/assets/services/portraits.jpeg";
+import event from "@/assets/services/EVENT.jpeg";
+import maternity from "@/assets/services/MATERNITY.jpeg";
+import fashion from "@/assets/services/fashion.jpeg";
 function Services() {
   const services = [
     {
@@ -93,7 +93,6 @@ function Services() {
 
   return (
     <section className="services-section" id="services">
-
       {/* =====================================================
           BACKGROUND
       ===================================================== */}
@@ -104,13 +103,11 @@ function Services() {
       <div className="services-orb services-orb-two"></div>
 
       <div className="services-container">
-
         {/* =====================================================
             HEADER
         ===================================================== */}
 
         <div className="services-header">
-
           <div className="services-eyebrow">
             <span></span>
 
@@ -125,12 +122,10 @@ function Services() {
           </h2>
 
           <p className="services-intro">
-            From the biggest celebrations to the smallest
-            expressions, we create photographs and films
-            that allow you to experience your memories again
-            and again.
+            From the biggest celebrations to the smallest expressions, we create
+            photographs and films that allow you to experience your memories
+            again and again.
           </p>
-
         </div>
 
         {/* =====================================================
@@ -138,7 +133,6 @@ function Services() {
         ===================================================== */}
 
         <div className="services-grid">
-
           {services.map((service, index) => (
             <article
               className="service-card"
@@ -147,7 +141,6 @@ function Services() {
                 "--service-delay": `${index * 0.12}s`,
               }}
             >
-
               {/* IMAGE */}
 
               <img
@@ -167,43 +160,27 @@ function Services() {
               {/* TOP */}
 
               <div className="service-card-top">
+                <span className="service-number">{service.number}</span>
 
-                <span className="service-number">
-                  {service.number}
-                </span>
-
-                <span className="service-plus">
-                  +
-                </span>
-
+                <span className="service-plus">+</span>
               </div>
 
               {/* CONTENT */}
 
               <div className="service-card-content">
-
                 <h3>
                   {service.title}
 
-                  <em>
-                    {service.subtitle}
-                  </em>
+                  <em>{service.subtitle}</em>
                 </h3>
 
-                <p>
-                  {service.description}
-                </p>
+                <p>{service.description}</p>
 
                 <div className="service-tags">
-
                   {service.tags.map((tag) => (
-                    <span key={tag}>
-                      {tag}
-                    </span>
+                    <span key={tag}>{tag}</span>
                   ))}
-
                 </div>
-
               </div>
 
               {/* BOTTOM LINE */}
@@ -213,10 +190,8 @@ function Services() {
               {/* GOLD GLOW */}
 
               <div className="service-card-glow"></div>
-
             </article>
           ))}
-
         </div>
 
         {/* =====================================================
@@ -224,17 +199,10 @@ function Services() {
         ===================================================== */}
 
         <div className="services-bottom">
-
           <div className="services-bottom-left">
+            <span className="services-bottom-number">08</span>
 
-            <span className="services-bottom-number">
-              08
-            </span>
-
-            <span>
-              WAYS TO TELL YOUR STORY
-            </span>
-
+            <span>WAYS TO TELL YOUR STORY</span>
           </div>
 
           <p>
@@ -242,23 +210,13 @@ function Services() {
             <em>Endless memories.</em>
           </p>
 
-          <a
-            href="#contact"
-            className="services-button"
-          >
-            <span>
-              Plan Your Session
-            </span>
+          <a href="#contact" className="services-button">
+            <span>Plan Your Session</span>
 
-            <b>
-              ↗
-            </b>
+            <b>↗</b>
           </a>
-
         </div>
-
       </div>
-
     </section>
   );
 }

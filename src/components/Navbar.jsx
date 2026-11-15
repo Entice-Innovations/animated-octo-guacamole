@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from "react";
-import logo from "../assets/logo1.png";
+import logo from "@/assets/brand/logo1.png";
 import "../styles/components/Navbar.css";
 
 function Navbar() {
@@ -49,7 +48,7 @@ function Navbar() {
     window.history.replaceState(
       null,
       "",
-      window.location.pathname + window.location.search
+      window.location.pathname + window.location.search,
     );
 
     closeMenu();
@@ -58,16 +57,13 @@ function Navbar() {
   return (
     <header className="site-header">
       <div className="navbar">
-
         {/* Desktop left navigation */}
         <nav className="nav-side nav-left" aria-label="Main navigation">
           {leftLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              onClick={(event) =>
-                handleSectionClick(event, link.href)
-              }
+              onClick={(event) => handleSectionClick(event, link.href)}
             >
               {link.label}
             </a>
@@ -79,9 +75,7 @@ function Navbar() {
           href="#home"
           className="navbar-logo"
           aria-label="Infinity Pixel Studios home"
-          onClick={(event) =>
-            handleSectionClick(event, "#home")
-          }
+          onClick={(event) => handleSectionClick(event, "#home")}
         >
           <img src={logo} alt="Infinity Pixel Studios" />
         </a>
@@ -92,9 +86,7 @@ function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              onClick={(event) =>
-                handleSectionClick(event, link.href)
-              }
+              onClick={(event) => handleSectionClick(event, link.href)}
             >
               {link.label}
             </a>
@@ -107,9 +99,7 @@ function Navbar() {
           <a
             href="#contact"
             className="nav-book"
-            onClick={(event) =>
-              handleSectionClick(event, "#contact")
-            }
+            onClick={(event) => handleSectionClick(event, "#contact")}
           >
             Book Now <span>↗</span>
           </a>
@@ -135,9 +125,7 @@ function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              onClick={(event) =>
-                handleSectionClick(event, link.href)
-              }
+              onClick={(event) => handleSectionClick(event, link.href)}
             >
               {link.label}
             </a>
@@ -150,9 +138,7 @@ function Navbar() {
           <a
             href="#contact"
             className="mobile-book"
-            onClick={(event) =>
-              handleSectionClick(event, "#contact")
-            }
+            onClick={(event) => handleSectionClick(event, "#contact")}
           >
             Book Your Date ↗
           </a>

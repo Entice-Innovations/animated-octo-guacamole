@@ -1,4 +1,4 @@
-import heroImage from "../assets/HEROO.jpeg";
+import heroImage from "@/assets/hero/HEROO.jpeg";
 import "../styles/components/Hero.css";
 
 function Hero() {
@@ -6,10 +6,7 @@ function Hero() {
     <section className="hero" id="home">
       {/* Background image */}
       <div className="hero-image">
-        <img
-          src={heroImage}
-          alt="South Indian wedding"
-        />
+        <img src={heroImage} alt="South Indian wedding" />
       </div>
 
       {/* Dark overlay */}
@@ -17,13 +14,9 @@ function Hero() {
 
       {/* Hero content */}
       <div className="hero-content">
-        <p className="hero-eyebrow">
-          INFINITY PIXEL STUDIOS
-        </p>
+        <p className="hero-eyebrow">INFINITY PIXEL STUDIOS</p>
 
-        <p className="hero-category">
-          WEDDING PHOTOGRAPHY & FILMS
-        </p>
+        <p className="hero-category">WEDDING PHOTOGRAPHY & FILMS</p>
 
         <h1>
           Every Moment.
@@ -32,9 +25,8 @@ function Hero() {
         </h1>
 
         <p className="hero-description">
-          The laughter, the tears, the little details.
-          We turn your most beautiful moments into
-          memories that last forever.
+          The laughter, the tears, the little details. We turn your most
+          beautiful moments into memories that last forever.
         </p>
 
         <div className="hero-actions">

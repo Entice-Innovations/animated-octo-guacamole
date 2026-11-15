@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import "../styles/components/Contact.css";
-import { submitEnquiry } from "../services/enquiryService";
+// import { submitEnquiry } from "../services/enquiryService";
 
 function Contact() {
   const [submitting, setSubmitting] = useState(false);
@@ -16,23 +15,22 @@ function Contact() {
     setSubmitMessage("");
 
     const form = event.currentTarget;
-    const formData = new FormData(form);
+    // const formData = new FormData(form);
 
-    const enquiryData = {
-      name: String(formData.get("name") || "").trim(),
-      phone: String(formData.get("phone") || "").trim(),
-      email: String(formData.get("email") || "").trim(),
-      eventType: String(formData.get("event") || ""),
-      message: String(formData.get("message") || "").trim(),
-    };
+    // const enquiryData = {
+    //   name: String(formData.get("name") || "").trim(),
+    //   phone: String(formData.get("phone") || "").trim(),
+    //   email: String(formData.get("email") || "").trim(),
+    //   eventType: String(formData.get("event") || ""),
+    //   message: String(formData.get("message") || "").trim(),
+    // };
 
     try {
-  const result = await submitEnquiry(enquiryData);
-      
-
+      // why it's never used ?
+      // const result = await submitEnquiry(enquiryData);
       setSubmitStatus("success");
       setSubmitMessage(
-        "Thank you! Your enquiry has been sent successfully. We'll get back to you soon."
+        "Thank you! Your enquiry has been sent successfully. We'll get back to you soon.",
       );
 
       form.reset();
@@ -43,7 +41,7 @@ function Contact() {
       setSubmitMessage(
         error.message === "Failed to fetch"
           ? "Unable to connect to the server. Please check that the backend is running and try again."
-          : error.message || "Something went wrong. Please try again."
+          : error.message || "Something went wrong. Please try again.",
       );
     } finally {
       setSubmitting(false);
@@ -71,9 +69,8 @@ function Contact() {
           </h2>
 
           <p className="contact-intro">
-            Tell us about your wedding, celebration, or special
-            moment. We'd love to turn it into photographs and
-            films you'll cherish forever.
+            Tell us about your wedding, celebration, or special moment. We'd
+            love to turn it into photographs and films you'll cherish forever.
           </p>
 
           <div className="contact-details">
@@ -165,54 +162,33 @@ function Contact() {
             <div className="form-group">
               <label htmlFor="event">EVENT TYPE</label>
 
-              <select
-                id="event"
-                name="event"
-                defaultValue=""
-                required
-              >
+              <select id="event" name="event" defaultValue="" required>
                 <option value="" disabled>
                   Select your event
                 </option>
 
-                <option value="Wedding Photography">
-                  Wedding
-                </option>
+                <option value="Wedding Photography">Wedding</option>
 
-                <option value="Engagement">
-                  Engagement
-                </option>
+                <option value="Engagement">Engagement</option>
 
-                <option value="Wedding Photography">
-                  Pre Wedding
-                </option>
+                <option value="Wedding Photography">Pre Wedding</option>
 
-                <option value="Wedding Photography">
-                  Post Wedding
-                </option>
+                <option value="Wedding Photography">Post Wedding</option>
 
-                <option value="Maternity Photography">
-                  Maternity
-                </option>
+                <option value="Maternity Photography">Maternity</option>
 
                 <option value="Event Photography">
                   Birthday / Celebration
                 </option>
 
-                <option value="Event Photography">
-                  Corporate / Event
-                </option>
+                <option value="Event Photography">Corporate / Event</option>
 
-                <option value="Other">
-                  Other
-                </option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="message">
-                TELL US ABOUT YOUR STORY
-              </label>
+              <label htmlFor="message">TELL US ABOUT YOUR STORY</label>
 
               <textarea
                 id="message"
@@ -232,10 +208,7 @@ function Contact() {
                   marginTop: "14px",
                   lineHeight: 1.6,
                   fontSize: "0.92rem",
-                  color:
-                    submitStatus === "success"
-                      ? "#2f6b3c"
-                      : "#b42318",
+                  color: submitStatus === "success" ? "#2f6b3c" : "#b42318",
                 }}
               >
                 {submitMessage}
@@ -247,9 +220,7 @@ function Contact() {
               className="contact-submit"
               disabled={submitting}
             >
-              <span>
-                {submitting ? "Sending..." : "Send Enquiry"}
-              </span>
+              <span>{submitting ? "Sending..." : "Send Enquiry"}</span>
               <b>{submitting ? "…" : "↗"}</b>
             </button>
           </form>

@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo1.png";
+import logo from "@/assets/brand/logo1.png";
 import "../styles/pages/Login.css";
 import { loginCustomer } from "../services/customerService";
 
@@ -29,18 +28,12 @@ function Login() {
 
     try {
       // Login API is handled by customerService.js
-      const data = await loginCustomer(
-        loginValue.trim(),
-        password
-      );
+      const data = await loginCustomer(loginValue.trim(), password);
 
-      const customerId =
-        data.customer?._id || data.customer?.id || data.id;
+      const customerId = data.customer?._id || data.customer?.id || data.id;
 
       if (!data.token || !customerId) {
-        throw new Error(
-          "Login information is incomplete. Please try again."
-        );
+        throw new Error("Login information is incomplete. Please try again.");
       }
 
       // Keep the customer signed in across browser visits.
@@ -59,22 +52,17 @@ function Login() {
       localStorage.setItem("customerToken", data.token);
       localStorage.setItem("customerId", String(customerId));
       localStorage.setItem("loggedInCustomerId", String(customerId));
-      localStorage.setItem(
-        "customer",
-        JSON.stringify(data.customer || {})
-      );
+      localStorage.setItem("customer", JSON.stringify(data.customer || {}));
 
       navigate("/customer/dashboard", { replace: true });
-
     } catch (err) {
       console.error("Login error:", err);
 
       setError(
         err instanceof TypeError
           ? "Cannot connect to the server. Please try again."
-          : err.message || "Login failed. Please try again."
+          : err.message || "Login failed. Please try again.",
       );
-
     } finally {
       setLoading(false);
     }
@@ -106,8 +94,8 @@ function Login() {
             <em>beautifully preserved.</em>
           </h1>
           <p className="login-visual-description">
-            Your photography, payments and important documents,
-            all in one place.
+            Your photography, payments and important documents, all in one
+            place.
           </p>
           <div className="login-line" />
           <span className="login-caption">
@@ -141,9 +129,7 @@ function Login() {
 
           <form className="login-form" onSubmit={handleLogin}>
             <div className="form-field">
-              <label htmlFor="loginValue">
-                EMAIL OR MOBILE NUMBER
-              </label>
+              <label htmlFor="loginValue">EMAIL OR MOBILE NUMBER</label>
               <div className="input-wrapper">
                 <span className="input-icon" aria-hidden="true">
                   @
@@ -180,22 +166,15 @@ function Login() {
                 <button
                   type="button"
                   className="password-toggle"
-                  onClick={() =>
-                    setShowPassword((previous) => !previous)
-                  }
-                  aria-label={
-                    showPassword ? "Hide password" : "Show password"
-                  }
+                  onClick={() => setShowPassword((previous) => !previous)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? "HIDE" : "SHOW"}
                 </button>
               </div>
 
               <div className="forgot-password-row">
-                <Link
-                  to="/forgot-password"
-                  className="forgot-password-link"
-                >
+                <Link to="/forgot-password" className="forgot-password-link">
                   Forgot password?
                 </Link>
               </div>
@@ -207,17 +186,9 @@ function Login() {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="login-submit"
-              disabled={loading}
-            >
-              <span>
-                {loading ? "SIGNING IN..." : "SIGN IN"}
-              </span>
-              {!loading && (
-                <span className="login-arrow">↗</span>
-              )}
+            <button type="submit" className="login-submit" disabled={loading}>
+              <span>{loading ? "SIGNING IN..." : "SIGN IN"}</span>
+              {!loading && <span className="login-arrow">↗</span>}
             </button>
           </form>
 

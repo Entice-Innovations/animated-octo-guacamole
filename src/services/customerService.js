@@ -1,4 +1,3 @@
-
 const API_URL = "http://localhost:5000";
 
 // CUSTOMER LOGIN
@@ -44,19 +43,16 @@ export const registerCustomer = async (customerData) => {
 
 // SEND FORGOT PASSWORD OTP
 export const sendPasswordResetOtp = async (loginValue) => {
-  const response = await fetch(
-    `${API_URL}/api/customers/forgot-password`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        loginValue,
-        method: "email",
-      }),
-    }
-  );
+  const response = await fetch(`${API_URL}/api/customers/forgot-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      loginValue,
+      method: "email",
+    }),
+  });
 
   const data = await response.json().catch(() => ({}));
 
@@ -69,19 +65,16 @@ export const sendPasswordResetOtp = async (loginValue) => {
 
 // VERIFY PASSWORD RESET OTP
 export const verifyPasswordResetOtp = async (loginValue, otp) => {
-  const response = await fetch(
-    `${API_URL}/api/customers/verify-reset-otp`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        loginValue,
-        otp,
-      }),
-    }
-  );
+  const response = await fetch(`${API_URL}/api/customers/verify-reset-otp`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      loginValue,
+      otp,
+    }),
+  });
 
   const data = await response.json().catch(() => ({}));
 
@@ -96,22 +89,19 @@ export const verifyPasswordResetOtp = async (loginValue, otp) => {
 export const resetCustomerPassword = async (
   loginValue,
   resetToken,
-  newPassword
+  newPassword,
 ) => {
-  const response = await fetch(
-    `${API_URL}/api/customers/reset-password`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        loginValue,
-        resetToken,
-        newPassword,
-      }),
-    }
-  );
+  const response = await fetch(`${API_URL}/api/customers/reset-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      loginValue,
+      resetToken,
+      newPassword,
+    }),
+  });
 
   const data = await response.json().catch(() => ({}));
 

@@ -1,5 +1,4 @@
-
-import logo from "../../assets/logo.png";
+import logo from "@/assets/brand/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/pages/AdminLogin.css";
@@ -48,14 +47,13 @@ function AdminLogin() {
 
       // Go to admin dashboard
       navigate("/admin/dashboard");
-
     } catch (error) {
       console.error("Admin login error:", error);
 
       setError(
         error instanceof TypeError
           ? "Unable to connect to the server. Please make sure the backend is running."
-          : error.message || "Invalid admin email or password."
+          : error.message || "Invalid admin email or password.",
       );
     } finally {
       setLoading(false);
@@ -82,10 +80,7 @@ function AdminLogin() {
         <div className="admin-login-heading">
           <span>STUDIO MANAGEMENT</span>
           <h2>Welcome back.</h2>
-          <p>
-            Sign in to manage customers, projects,
-            payments and documents.
-          </p>
+          <p>Sign in to manage customers, projects, payments and documents.</p>
         </div>
 
         <form onSubmit={handleLogin} className="admin-login-form">
@@ -134,12 +129,8 @@ function AdminLogin() {
               <button
                 type="button"
                 className="password-toggle"
-                onClick={() =>
-                  setShowPassword((previous) => !previous)
-                }
-                aria-label={
-                  showPassword ? "Hide password" : "Show password"
-                }
+                onClick={() => setShowPassword((previous) => !previous)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
                 disabled={loading}
               >
                 {showPassword ? "Hide" : "Show"}
@@ -147,22 +138,16 @@ function AdminLogin() {
             </div>
           </div>
 
-          {error && (
-            <p className="admin-login-error">{error}</p>
-          )}
+          {error && <p className="admin-login-error">{error}</p>}
 
           <button
             type="submit"
             className="admin-login-button"
             disabled={loading}
           >
-            <span>
-              {loading ? "Signing in..." : "Enter Admin Portal"}
-            </span>
+            <span>{loading ? "Signing in..." : "Enter Admin Portal"}</span>
 
-            <span className="admin-login-arrow">
-              {loading ? "…" : "↗"}
-            </span>
+            <span className="admin-login-arrow">{loading ? "…" : "↗"}</span>
           </button>
         </form>
 

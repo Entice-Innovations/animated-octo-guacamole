@@ -1,4 +1,3 @@
-
 /* =========================================================
    INFINITY PIXEL STUDIOS
    ADMIN DASHBOARD — PREMIUM CREAM & GOLD THEME
@@ -156,12 +155,7 @@ a {
       rgba(178, 138, 74, 0.14),
       transparent 32%
     ),
-    linear-gradient(
-      180deg,
-      #292621 0%,
-      #211f1c 55%,
-      #1a1917 100%
-    );
+    linear-gradient(180deg, #292621 0%, #211f1c 55%, #1a1917 100%);
 
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 8px 0 30px rgba(20, 18, 15, 0.08);
@@ -493,7 +487,9 @@ a {
   font-weight: 600;
 
   cursor: pointer;
-  transition: color var(--ip-transition), background var(--ip-transition);
+  transition:
+    color var(--ip-transition),
+    background var(--ip-transition);
 }
 
 .admin-logout-button:hover {
@@ -1363,7 +1359,10 @@ a {
 
 .payment-history-row {
   display: grid;
-  grid-template-columns: minmax(120px, 1fr) minmax(80px, 130px) minmax(90px, 120px);
+  grid-template-columns: minmax(120px, 1fr) minmax(80px, 130px) minmax(
+      90px,
+      120px
+    );
   align-items: center;
   gap: 14px;
 

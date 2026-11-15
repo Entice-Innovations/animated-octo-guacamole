@@ -1,19 +1,18 @@
-
 import { useCallback, useEffect, useState } from "react";
 import "../styles/components/Gallery.css";
 
-import hinduWedding from "../assets/hindu.jpeg";
-import aestheticWedding from "../assets/asethetic.jpeg";
-import candidWedding from "../assets/candid.jpeg";
-import muslimWedding from "../assets/muslim.jpeg";
-import postWedding from "../assets/post wedding.jpeg";
-import familyWedding from "../assets/family.jpeg";
-import preWedding from "../assets/pre wedding.jpeg";
-import cinematicWedding from "../assets/cinematic (2).jpeg";
-import coupleWedding from "../assets/couple.jpeg";
-import receptionWedding from "../assets/reception.jpeg";
-import candidsWedding from "../assets/candids.jpeg";
-import christianWedding from "../assets/chirstian.jpeg";
+import hinduWedding from "@/assets/gallery/hindu.jpeg";
+import aestheticWedding from "@/assets/gallery/asethetic.jpeg";
+import candidWedding from "@/assets/gallery/candid.jpeg";
+import muslimWedding from "@/assets/gallery/muslim.jpeg";
+import postWedding from "@/assets/gallery/post wedding.jpeg";
+import familyWedding from "@/assets/gallery/family.jpeg";
+import preWedding from "@/assets/gallery/pre wedding.jpeg";
+import cinematicWedding from "@/assets/gallery/cinematic (2).jpeg";
+import coupleWedding from "@/assets/gallery/couple.jpeg";
+import receptionWedding from "@/assets/gallery/reception.jpeg";
+import candidsWedding from "@/assets/gallery/candids.jpeg";
+import christianWedding from "@/assets/gallery/chirstian.jpeg";
 
 function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -52,10 +51,7 @@ function Gallery() {
     setSelectedImage((current) => {
       if (current === null) return galleryImages.length - 1;
 
-      return (
-        (current - 1 + galleryImages.length) %
-        galleryImages.length
-      );
+      return (current - 1 + galleryImages.length) % galleryImages.length;
     });
   }, [galleryImages.length]);
 
@@ -106,8 +102,8 @@ function Gallery() {
           </h2>
 
           <p className="gallery-intro">
-            Every smile, every glance, every celebration —
-            beautifully preserved as timeless wedding memories.
+            Every smile, every glance, every celebration — beautifully preserved
+            as timeless wedding memories.
           </p>
         </div>
 
@@ -130,9 +126,7 @@ function Gallery() {
 
               <div className="gallery-image-overlay"></div>
 
-              <span>
-                {String(index + 1).padStart(2, "0")}
-              </span>
+              <span>{String(index + 1).padStart(2, "0")}</span>
 
               <div className="gallery-box-icon">+</div>
 
@@ -168,13 +162,9 @@ function Gallery() {
         >
           <div className="lightbox-top">
             <div className="lightbox-counter">
-              <span>
-                {String(selectedImage + 1).padStart(2, "0")}
-              </span>
+              <span>{String(selectedImage + 1).padStart(2, "0")}</span>
               <i>/</i>
-              <span>
-                {String(galleryImages.length).padStart(2, "0")}
-              </span>
+              <span>{String(galleryImages.length).padStart(2, "0")}</span>
             </div>
 
             <button
@@ -220,10 +210,7 @@ function Gallery() {
               <h3>{galleryImages[selectedImage].title}</h3>
             </div>
 
-            <button
-              className="lightbox-back"
-              onClick={closeLightbox}
-            >
+            <button className="lightbox-back" onClick={closeLightbox}>
               <span>↙</span>
               Back to Gallery
             </button>

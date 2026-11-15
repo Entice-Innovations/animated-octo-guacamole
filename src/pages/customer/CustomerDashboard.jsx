@@ -1,4 +1,3 @@
-
 import {
   API_URL,
   getCustomerProfile,
@@ -9,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import logo from "../../assets/logo1.png";
+import logo from "@/assets/brand/logo1.png";
 import "../../styles/pages/CustomerDashboard.css";
 
 // =====================================================
@@ -191,13 +190,9 @@ function CustomerDashboard() {
     history: [],
   };
 
-  const documents = Array.isArray(customer.documents)
-    ? customer.documents
-    : [];
+  const documents = Array.isArray(customer.documents) ? customer.documents : [];
 
-  const paymentHistory = Array.isArray(payment.history)
-    ? payment.history
-    : [];
+  const paymentHistory = Array.isArray(payment.history) ? payment.history : [];
 
   // =====================================================
   // PAYMENT CALCULATIONS
@@ -206,28 +201,19 @@ function CustomerDashboard() {
   const paymentTotal = Number(payment.total) || 0;
   const paymentPaid = Number(payment.paid) || 0;
 
-  const calculatedBalance = Math.max(
-    paymentTotal - paymentPaid,
-    0
-  );
+  const calculatedBalance = Math.max(paymentTotal - paymentPaid, 0);
 
   const paymentBalance = calculatedBalance;
 
   const paymentPercentage =
     paymentTotal > 0
-      ? Math.min(
-          Math.round((paymentPaid / paymentTotal) * 100),
-          100
-        )
+      ? Math.min(Math.round((paymentPaid / paymentTotal) * 100), 100)
       : 0;
 
   const isFullyPaid =
-    paymentTotal > 0 &&
-    paymentPaid >= paymentTotal &&
-    paymentBalance <= 0;
+    paymentTotal > 0 && paymentPaid >= paymentTotal && paymentBalance <= 0;
 
-  const hasPaymentDue =
-    paymentTotal > 0 && paymentBalance > 0;
+  const hasPaymentDue = paymentTotal > 0 && paymentBalance > 0;
 
   // =====================================================
   // PROJECT PROGRESS
@@ -235,7 +221,7 @@ function CustomerDashboard() {
 
   const projectProgress = Math.min(
     Math.max(Number(project.progress) || 0, 0),
-    100
+    100,
   );
 
   // =====================================================
@@ -243,13 +229,10 @@ function CustomerDashboard() {
   // =====================================================
 
   const clientSince = customer.clientSince
-    ? new Date(customer.clientSince).toLocaleDateString(
-        "en-IN",
-        {
-          month: "short",
-          year: "numeric",
-        }
-      )
+    ? new Date(customer.clientSince).toLocaleDateString("en-IN", {
+        month: "short",
+        year: "numeric",
+      })
     : "2026";
 
   // =====================================================
@@ -257,21 +240,16 @@ function CustomerDashboard() {
   // =====================================================
 
   const displayClientId =
-    customer.clientId ||
-    customer.id ||
-    customer._id ||
-    "—";
+    customer.clientId || customer.id || customer._id || "—";
 
   // =====================================================
   // RAZORPAY ONLINE PAYMENT
   // =====================================================
 
   const openPaymentOptions = () => {
-    const halfBalance =
-      Math.round((paymentBalance / 2) * 100) / 100;
+    const halfBalance = Math.round((paymentBalance / 2) * 100) / 100;
 
-    const defaultAmount =
-      paymentBalance >= 2 ? halfBalance : paymentBalance;
+    const defaultAmount = paymentBalance >= 2 ? halfBalance : paymentBalance;
 
     setPaymentAmount(defaultAmount.toFixed(2));
     setPaymentError("");
@@ -281,8 +259,7 @@ function CustomerDashboard() {
   const chooseHalfPayment = () => {
     if (paymentBalance < 2) return;
 
-    const halfBalance =
-      Math.round((paymentBalance / 2) * 100) / 100;
+    const halfBalance = Math.round((paymentBalance / 2) * 100) / 100;
 
     setPaymentAmount(halfBalance.toFixed(2));
   };
@@ -320,13 +297,13 @@ function CustomerDashboard() {
         amountPaise < 100
       ) {
         throw new Error(
-          "Enter a valid amount of at least ₹1, with up to 2 decimal places."
+          "Enter a valid amount of at least ₹1, with up to 2 decimal places.",
         );
       }
 
       if (amountPaise > balancePaise) {
         throw new Error(
-          `The amount cannot exceed your remaining balance of ${formatMoney(paymentBalance)}.`
+          `The amount cannot exceed your remaining balance of ${formatMoney(paymentBalance)}.`,
         );
       }
 
@@ -338,16 +315,13 @@ function CustomerDashboard() {
 
       if (!scriptLoaded) {
         throw new Error(
-          "Unable to load Razorpay. Please check your internet connection."
+          "Unable to load Razorpay. Please check your internet connection.",
         );
       }
 
       // API SERVICE: CREATE RAZORPAY ORDER
 
-      const orderData = await createRazorpayOrder(
-        amountToPay,
-        token
-      );
+      const orderData = await createRazorpayOrder(amountToPay, token);
 
       console.log("Selected amount (₹):", amountToPay);
       console.log("Expected amount (paise):", amountPaise);
@@ -359,7 +333,7 @@ function CustomerDashboard() {
         Number(orderData.order.amount) !== amountPaise
       ) {
         throw new Error(
-          "The server returned a different payment amount. Please refresh and try again."
+          "The server returned a different payment amount. Please refresh and try again.",
         );
       }
 
@@ -395,7 +369,7 @@ function CustomerDashboard() {
 
             const verifyData = await verifyRazorpayPayment(
               razorpayResponse,
-              token
+              token,
             );
 
             setCustomer(verifyData.customer);
@@ -404,12 +378,12 @@ function CustomerDashboard() {
             setPaymentAmount("");
 
             alert(
-              "Payment successful! Your payment details have been updated."
+              "Payment successful! Your payment details have been updated.",
             );
           } catch (error) {
             setPaymentError(
               error.message ||
-                "Payment confirmation is pending. Please check before trying again."
+                "Payment confirmation is pending. Please check before trying again.",
             );
           } finally {
             setIsPaying(false);
@@ -427,8 +401,7 @@ function CustomerDashboard() {
         });
 
         setPaymentError(
-          response.error?.description ||
-            "Payment failed. Please try again."
+          response.error?.description || "Payment failed. Please try again.",
         );
 
         setIsPaying(false);
@@ -436,9 +409,7 @@ function CustomerDashboard() {
 
       checkout.open();
     } catch (error) {
-      setPaymentError(
-        error.message || "Unable to start your payment."
-      );
+      setPaymentError(error.message || "Unable to start your payment.");
 
       setIsPaying(false);
     }
@@ -452,17 +423,15 @@ function CustomerDashboard() {
     <section className="portal-section dashboard-section">
       <div className="welcome-block">
         <div>
-          <span className="section-eyebrow">
-            CLIENT DASHBOARD
-          </span>
+          <span className="section-eyebrow">CLIENT DASHBOARD</span>
 
           <h1>
             Welcome back <em>{customer.name}</em>.
           </h1>
 
           <p>
-            Everything related to your Infinity Pixel Studios
-            project, payments and documents is available here.
+            Everything related to your Infinity Pixel Studios project, payments
+            and documents is available here.
           </p>
         </div>
 
@@ -475,9 +444,7 @@ function CustomerDashboard() {
       <div className="dashboard-project-card">
         <div className="project-card-content">
           <div className="project-card-top">
-            <span className="project-label">
-              CURRENT PROJECT
-            </span>
+            <span className="project-label">CURRENT PROJECT</span>
 
             <span className="project-status">
               {project.status || "NOT STARTED"}
@@ -620,9 +587,7 @@ function CustomerDashboard() {
               <div>
                 <span>PAYMENT COMPLETE</span>
                 <h3>Your project is fully paid.</h3>
-                <p>
-                  Thank you for choosing Infinity Pixel Studios.
-                </p>
+                <p>Thank you for choosing Infinity Pixel Studios.</p>
               </div>
             </div>
           )}
@@ -645,18 +610,14 @@ function CustomerDashboard() {
               documents.slice(0, 3).map((document, index) => (
                 <div
                   className="mini-document"
-                  key={
-                    document.id ||
-                    document._id ||
-                    `document-${index}`
-                  }
+                  key={document.id || document._id || `document-${index}`}
                 >
                   <div className="mini-document-icon">
                     {document.type === "INVOICE"
                       ? "₹"
                       : document.type === "AGREEMENT"
-                      ? "✦"
-                      : "▤"}
+                        ? "✦"
+                        : "▤"}
                   </div>
 
                   <div>
@@ -668,9 +629,7 @@ function CustomerDashboard() {
                 </div>
               ))
             ) : (
-              <div className="mini-empty">
-                No documents available yet.
-              </div>
+              <div className="mini-empty">No documents available yet.</div>
             )}
           </div>
         </div>
@@ -683,8 +642,8 @@ function CustomerDashboard() {
           <span>NEED HELP?</span>
           <h3>We're here for you.</h3>
           <p>
-            Have a question about your project, payment or documents?
-            Get in touch with Infinity Pixel Studios.
+            Have a question about your project, payment or documents? Get in
+            touch with Infinity Pixel Studios.
           </p>
         </div>
 
@@ -708,10 +667,12 @@ function CustomerDashboard() {
     <section className="portal-section projects-section">
       <div className="section-heading">
         <span className="section-eyebrow">YOUR PROJECT</span>
-        <h2>Your <em>story.</em></h2>
+        <h2>
+          Your <em>story.</em>
+        </h2>
         <p>
-          Follow the progress of your photography project with
-          Infinity Pixel Studios.
+          Follow the progress of your photography project with Infinity Pixel
+          Studios.
         </p>
       </div>
 
@@ -728,9 +689,7 @@ function CustomerDashboard() {
         </div>
 
         <div className="project-detail-main">
-          <span className="project-label">
-            {project.type || "Photography"}
-          </span>
+          <span className="project-label">{project.type || "Photography"}</span>
 
           <h2>{project.name}</h2>
 
@@ -775,17 +734,13 @@ function CustomerDashboard() {
           <div>
             <span>STEP 01</span>
             <h3>Project Confirmed</h3>
-            <p>
-              Your project has been registered with the studio.
-            </p>
+            <p>Your project has been registered with the studio.</p>
           </div>
         </div>
 
         <div
           className={
-            projectProgress > 0
-              ? "timeline-item active"
-              : "timeline-item"
+            projectProgress > 0 ? "timeline-item active" : "timeline-item"
           }
         >
           <span className="timeline-dot">02</span>
@@ -798,9 +753,7 @@ function CustomerDashboard() {
 
         <div
           className={
-            projectProgress >= 100
-              ? "timeline-item active"
-              : "timeline-item"
+            projectProgress >= 100 ? "timeline-item active" : "timeline-item"
           }
         >
           <span className="timeline-dot">03</span>
@@ -822,11 +775,10 @@ function CustomerDashboard() {
     <section className="portal-section payments-section">
       <div className="section-heading">
         <span className="section-eyebrow">PAYMENTS</span>
-        <h2>Payment <em>details.</em></h2>
-        <p>
-          Keep track of your project investment and payment
-          transactions.
-        </p>
+        <h2>
+          Payment <em>details.</em>
+        </h2>
+        <p>Keep track of your project investment and payment transactions.</p>
       </div>
 
       <div className="payment-overview">
@@ -872,9 +824,7 @@ function CustomerDashboard() {
           <div>
             <span>PAYMENT COMPLETE</span>
             <h3>Your project is fully paid.</h3>
-            <p>
-              Thank you for choosing Infinity Pixel Studios.
-            </p>
+            <p>Thank you for choosing Infinity Pixel Studios.</p>
           </div>
         </div>
       )}
@@ -886,35 +836,25 @@ function CustomerDashboard() {
             <h3>Recent Transactions</h3>
           </div>
 
-          <span className="payment-history-count">
-            {paymentHistory.length}
-          </span>
+          <span className="payment-history-count">{paymentHistory.length}</span>
         </div>
 
         <div className="payment-history-list">
           {paymentHistory.length > 0 ? (
             paymentHistory.map((transaction, index) => {
               const transactionId =
-                transaction._id ||
-                transaction.id ||
-                `payment-${index}`;
+                transaction._id || transaction.id || `payment-${index}`;
 
               const transactionDate = transaction.date
-                ? new Date(transaction.date).toLocaleDateString(
-                    "en-IN",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )
+                ? new Date(transaction.date).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
                 : "Date unavailable";
 
               return (
-                <div
-                  className="payment-history-item"
-                  key={transactionId}
-                >
+                <div className="payment-history-item" key={transactionId}>
                   <div className="payment-history-icon">₹</div>
 
                   <div className="payment-history-details">
@@ -926,22 +866,15 @@ function CustomerDashboard() {
                       {transaction.method || "Payment"}
                     </span>
 
-                    {transaction.reference &&
-                      transaction.reference !== "—" && (
-                        <small>
-                          Ref: {transaction.reference}
-                        </small>
-                      )}
-
-                    {transaction.note && (
-                      <small>{transaction.note}</small>
+                    {transaction.reference && transaction.reference !== "—" && (
+                      <small>Ref: {transaction.reference}</small>
                     )}
+
+                    {transaction.note && <small>{transaction.note}</small>}
                   </div>
 
                   <div className="payment-history-amount">
-                    <strong>
-                      {formatMoney(transaction.amount)}
-                    </strong>
+                    <strong>{formatMoney(transaction.amount)}</strong>
 
                     <span
                       className={
@@ -961,8 +894,8 @@ function CustomerDashboard() {
               <div className="empty-icon">₹</div>
               <h4>No payments yet</h4>
               <p>
-                Payment transactions will appear here once
-                they are added by the studio.
+                Payment transactions will appear here once they are added by the
+                studio.
               </p>
             </div>
           )}
@@ -977,13 +910,11 @@ function CustomerDashboard() {
 
   const DocumentsContent = () => {
     const invoiceDocuments = documents.filter(
-      (document) =>
-        String(document.type || "").toUpperCase() === "INVOICE"
+      (document) => String(document.type || "").toUpperCase() === "INVOICE",
     );
 
     const agreementDocuments = documents.filter(
-      (document) =>
-        String(document.type || "").toUpperCase() === "AGREEMENT"
+      (document) => String(document.type || "").toUpperCase() === "AGREEMENT",
     );
 
     const otherDocuments = documents.filter((document) => {
@@ -993,10 +924,7 @@ function CustomerDashboard() {
     });
 
     const DocumentCard = ({ document }) => {
-      const documentUrl =
-        document.url ||
-        document.file ||
-        "";
+      const documentUrl = document.url || document.file || "";
 
       const finalUrl = documentUrl
         ? documentUrl.startsWith("http")
@@ -1004,9 +932,7 @@ function CustomerDashboard() {
           : `${API_URL}${documentUrl}`
         : "";
 
-      const documentType = String(
-        document.type || "DOCUMENT"
-      ).toUpperCase();
+      const documentType = String(document.type || "DOCUMENT").toUpperCase();
 
       return (
         <div className="document-card">
@@ -1014,36 +940,29 @@ function CustomerDashboard() {
             {documentType === "INVOICE"
               ? "₹"
               : documentType === "AGREEMENT"
-              ? "✦"
-              : "▤"}
+                ? "✦"
+                : "▤"}
           </div>
 
           <div className="document-card-content">
-            <span className="document-type">
-              {documentType}
-            </span>
+            <span className="document-type">{documentType}</span>
 
             <h3>{document.name || "Document"}</h3>
 
-            <p>
-              Document ID: {document.id || document._id || "—"}
-            </p>
+            <p>Document ID: {document.id || document._id || "—"}</p>
 
             <div className="document-meta">
               <span>
                 Date:{" "}
                 {document.uploadedAt
-                  ? new Date(
-                      document.uploadedAt
-                    ).toLocaleDateString("en-IN")
+                  ? new Date(document.uploadedAt).toLocaleDateString("en-IN")
                   : document.date || "Not available"}
               </span>
 
               <span
                 className={
-                  String(
-                    document.status || "AVAILABLE"
-                  ).toUpperCase() === "AVAILABLE"
+                  String(document.status || "AVAILABLE").toUpperCase() ===
+                  "AVAILABLE"
                     ? "document-available"
                     : "document-pending"
                 }
@@ -1064,9 +983,7 @@ function CustomerDashboard() {
                 View <span>↗</span>
               </a>
             ) : (
-              <span className="document-disabled">
-                Not available
-              </span>
+              <span className="document-disabled">Not available</span>
             )}
           </div>
         </div>
@@ -1077,11 +994,10 @@ function CustomerDashboard() {
       <section className="portal-section documents-section">
         <div className="section-heading">
           <span className="section-eyebrow">YOUR FILES</span>
-          <h2>Your <em>documents.</em></h2>
-          <p>
-            Important project documents shared by Infinity
-            Pixel Studios.
-          </p>
+          <h2>
+            Your <em>documents.</em>
+          </h2>
+          <p>Important project documents shared by Infinity Pixel Studios.</p>
         </div>
 
         <div className="document-category">
@@ -1099,11 +1015,7 @@ function CustomerDashboard() {
           {invoiceDocuments.length > 0 ? (
             invoiceDocuments.map((document, index) => (
               <DocumentCard
-                key={
-                  document.id ||
-                  document._id ||
-                  `invoice-${index}`
-                }
+                key={document.id || document._id || `invoice-${index}`}
                 document={document}
               />
             ))
@@ -1129,11 +1041,7 @@ function CustomerDashboard() {
           {agreementDocuments.length > 0 ? (
             agreementDocuments.map((document, index) => (
               <DocumentCard
-                key={
-                  document.id ||
-                  document._id ||
-                  `agreement-${index}`
-                }
+                key={document.id || document._id || `agreement-${index}`}
                 document={document}
               />
             ))
@@ -1159,18 +1067,13 @@ function CustomerDashboard() {
           {otherDocuments.length > 0 ? (
             otherDocuments.map((document, index) => (
               <DocumentCard
-                key={
-                  document.id ||
-                  document._id ||
-                  `other-${index}`
-                }
+                key={document.id || document._id || `other-${index}`}
                 document={document}
               />
             ))
           ) : (
             <div className="document-empty-small">
-              Additional documents will appear here when
-              shared by the studio.
+              Additional documents will appear here when shared by the studio.
             </div>
           )}
         </div>
@@ -1186,11 +1089,10 @@ function CustomerDashboard() {
     <section className="portal-section profile-section">
       <div className="section-heading">
         <span className="section-eyebrow">CLIENT PROFILE</span>
-        <h2>Your <em>profile.</em></h2>
-        <p>
-          Your personal information associated with Infinity
-          Pixel Studios.
-        </p>
+        <h2>
+          Your <em>profile.</em>
+        </h2>
+        <p>Your personal information associated with Infinity Pixel Studios.</p>
       </div>
 
       <div className="profile-card">
@@ -1278,9 +1180,7 @@ function CustomerDashboard() {
 
         <nav className="sidebar-nav">
           <button
-            className={
-              activeSection === "dashboard" ? "active" : ""
-            }
+            className={activeSection === "dashboard" ? "active" : ""}
             onClick={() => changeSection("dashboard")}
           >
             <span>⌂</span>
@@ -1288,9 +1188,7 @@ function CustomerDashboard() {
           </button>
 
           <button
-            className={
-              activeSection === "projects" ? "active" : ""
-            }
+            className={activeSection === "projects" ? "active" : ""}
             onClick={() => changeSection("projects")}
           >
             <span>◈</span>
@@ -1298,9 +1196,7 @@ function CustomerDashboard() {
           </button>
 
           <button
-            className={
-              activeSection === "payments" ? "active" : ""
-            }
+            className={activeSection === "payments" ? "active" : ""}
             onClick={() => changeSection("payments")}
           >
             <span>₹</span>
@@ -1308,9 +1204,7 @@ function CustomerDashboard() {
           </button>
 
           <button
-            className={
-              activeSection === "documents" ? "active" : ""
-            }
+            className={activeSection === "documents" ? "active" : ""}
             onClick={() => changeSection("documents")}
           >
             <span>▤</span>
@@ -1318,9 +1212,7 @@ function CustomerDashboard() {
           </button>
 
           <button
-            className={
-              activeSection === "profile" ? "active" : ""
-            }
+            className={activeSection === "profile" ? "active" : ""}
             onClick={() => changeSection("profile")}
           >
             <span>◎</span>
@@ -1334,10 +1226,7 @@ function CustomerDashboard() {
             Back to Website
           </Link>
 
-          <button
-            className="logout-button"
-            onClick={handleLogout}
-          >
+          <button className="logout-button" onClick={handleLogout}>
             <span>↪</span>
             Logout
           </button>
@@ -1368,10 +1257,7 @@ function CustomerDashboard() {
 
         <div className="dashboard-content">
           {paymentError && (
-            <div
-              className="payment-error-message"
-              role="alert"
-            >
+            <div className="payment-error-message" role="alert">
               {paymentError}
             </div>
           )}
@@ -1420,9 +1306,7 @@ function CustomerDashboard() {
             </div>
 
             <div className="payment-amount-field">
-              <label htmlFor="paymentAmount">
-                Enter amount to pay (₹)
-              </label>
+              <label htmlFor="paymentAmount">Enter amount to pay (₹)</label>
 
               <input
                 id="paymentAmount"
@@ -1431,9 +1315,7 @@ function CustomerDashboard() {
                 max={paymentBalance}
                 step="0.01"
                 value={paymentAmount}
-                onChange={(event) =>
-                  setPaymentAmount(event.target.value)
-                }
+                onChange={(event) => setPaymentAmount(event.target.value)}
                 disabled={isPaying}
                 placeholder="Enter your amount"
               />
@@ -1449,9 +1331,7 @@ function CustomerDashboard() {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setPaymentAmount(paymentBalance.toFixed(2))
-                  }
+                  onClick={() => setPaymentAmount(paymentBalance.toFixed(2))}
                   disabled={isPaying}
                 >
                   Pay Full Balance
@@ -1479,16 +1359,13 @@ function CustomerDashboard() {
             <div className="payment-modal-note">
               <strong>Secure online payment</strong>
               <p>
-                Pay your outstanding balance using the payment
-                methods available through Razorpay Checkout.
+                Pay your outstanding balance using the payment methods available
+                through Razorpay Checkout.
               </p>
             </div>
 
             {paymentError && (
-              <p
-                className="payment-error-message"
-                role="alert"
-              >
+              <p className="payment-error-message" role="alert">
                 {paymentError}
               </p>
             )}
@@ -1507,9 +1384,8 @@ function CustomerDashboard() {
             </button>
 
             <p className="payment-modal-small">
-              After payment, the server will verify the
-              transaction and update your payment history
-              and remaining balance.
+              After payment, the server will verify the transaction and update
+              your payment history and remaining balance.
             </p>
           </div>
         </div>

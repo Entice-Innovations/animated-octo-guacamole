@@ -1,4 +1,3 @@
-
 export const API_URL = "http://localhost:5000";
 
 // ==========================================
@@ -6,14 +5,9 @@ export const API_URL = "http://localhost:5000";
 // ==========================================
 
 export const getCustomerProfile = async (customerId, token) => {
-  const response = await fetch(
-    `${API_URL}/api/customers/${customerId}`,
-    {
-      headers: token
-        ? { Authorization: `Bearer ${token}` }
-        : {},
-    }
-  );
+  const response = await fetch(`${API_URL}/api/customers/${customerId}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
 
   const data = await response.json().catch(() => ({}));
 
@@ -29,17 +23,14 @@ export const getCustomerProfile = async (customerId, token) => {
 // ==========================================
 
 export const createRazorpayOrder = async (amount, token) => {
-  const response = await fetch(
-    `${API_URL}/api/payments/razorpay/order`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ amount }),
-    }
-  );
+  const response = await fetch(`${API_URL}/api/payments/razorpay/order`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ amount }),
+  });
 
   const data = await response.json().catch(() => ({}));
 
@@ -55,28 +46,23 @@ export const createRazorpayOrder = async (amount, token) => {
 // ==========================================
 
 export const verifyRazorpayPayment = async (razorpayResponse, token) => {
-  const response = await fetch(
-    `${API_URL}/api/payments/razorpay/verify`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        razorpay_order_id: razorpayResponse.razorpay_order_id,
-        razorpay_payment_id: razorpayResponse.razorpay_payment_id,
-        razorpay_signature: razorpayResponse.razorpay_signature,
-      }),
-    }
-  );
+  const response = await fetch(`${API_URL}/api/payments/razorpay/verify`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      razorpay_order_id: razorpayResponse.razorpay_order_id,
+      razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+      razorpay_signature: razorpayResponse.razorpay_signature,
+    }),
+  });
 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok || !data.success) {
-    throw new Error(
-      data.message || "We could not confirm your payment yet."
-    );
+    throw new Error(data.message || "We could not confirm your payment yet.");
   }
 
   return data;

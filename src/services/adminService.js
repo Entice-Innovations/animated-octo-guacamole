@@ -1,4 +1,3 @@
-
 export const API_URL = "http://localhost:5000";
 
 // ==========================================
@@ -32,9 +31,7 @@ export const apiRequest = async (endpoint, options = {}) => {
   }
 
   if (!response.ok) {
-    throw new Error(
-      data?.message || "Something went wrong. Please try again."
-    );
+    throw new Error(data?.message || "Something went wrong. Please try again.");
   }
 
   return data;

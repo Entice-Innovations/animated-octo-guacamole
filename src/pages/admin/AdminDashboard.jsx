@@ -1,13 +1,9 @@
-
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/pages/AdminDashboard.css";
-import logo from "../../assets/logo.png";
+import logo from "@/assets/brand/logo.png";
 
-import {
-  API_URL,
-  apiRequest,
-} from "../../services/adminService";
+import { API_URL, apiRequest } from "../../services/adminService";
 
 const emptyCustomer = { name: "", email: "", phone: "", password: "" };
 const emptyProject = {
@@ -54,7 +50,8 @@ function AdminDashboard() {
   const [customerForm, setCustomerForm] = useState(emptyCustomer);
   const [projectForm, setProjectForm] = useState(emptyProject);
   const [paymentForm, setPaymentForm] = useState(emptyPayment);
-  const [recordPaymentForm, setRecordPaymentForm] = useState(emptyRecordPayment);
+  const [recordPaymentForm, setRecordPaymentForm] =
+    useState(emptyRecordPayment);
   const [documentForm, setDocumentForm] = useState(emptyDocument);
 
   const adminToken = localStorage.getItem("adminToken");
@@ -71,29 +68,29 @@ function AdminDashboard() {
     window.setTimeout(() => setError(""), 5000);
   }, []);
 
-/* =========================================================
+  /* =========================================================
      LOAD CUSTOMERS
   ========================================================= */
 
-const loadCustomers = useCallback(async () => {
-  try {
-    const data = await apiRequest("/api/admin/customers");
+  const loadCustomers = useCallback(async () => {
+    try {
+      const data = await apiRequest("/api/admin/customers");
 
-    const list = Array.isArray(data)
-      ? data
-      : Array.isArray(data.customers)
-        ? data.customers
-        : Array.isArray(data.data)
-          ? data.data
-          : [];
+      const list = Array.isArray(data)
+        ? data
+        : Array.isArray(data.customers)
+          ? data.customers
+          : Array.isArray(data.data)
+            ? data.data
+            : [];
 
-    setCustomers(list);
-  } catch (err) {
-    showError(err.message);
-  } finally {
-    setLoading(false);
-  }
-}, [apiRequest, showError]);
+      setCustomers(list);
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [showError]);
 
   /* =========================================================
      LOAD ENQUIRIES
@@ -124,23 +121,23 @@ const loadCustomers = useCallback(async () => {
     } finally {
       setEnquiriesLoading(false);
     }
-  }, [apiRequest, showError]);
+  }, [showError]);
 
   /* =========================================================
      INITIAL LOAD
   ========================================================= */
-useEffect(() => {
-  if (!adminToken) {
-    navigate("/admin/login");
-    return;
-  }
+  useEffect(() => {
+    if (!adminToken) {
+      navigate("/admin/login");
+      return;
+    }
 
-  const timer = setTimeout(() => {
-    loadCustomers();
-  }, 0);
+    const timer = setTimeout(() => {
+      loadCustomers();
+    }, 0);
 
-  return () => clearTimeout(timer);
-}, [adminToken, navigate, loadCustomers]);
+    return () => clearTimeout(timer);
+  }, [adminToken, navigate, loadCustomers]);
 
   /* =========================================================
      REFRESH CUSTOMER
@@ -157,8 +154,8 @@ useEffect(() => {
 
       setCustomers((previous) =>
         previous.map((item) =>
-          String(item._id) === String(customerId) ? customer : item
-        )
+          String(item._id) === String(customerId) ? customer : item,
+        ),
       );
     } catch (err) {
       showError(err.message);
@@ -179,15 +176,13 @@ useEffect(() => {
       });
 
       if (!data.enquiry) {
-        throw new Error(
-          "The updated enquiry was not returned by the server."
-        );
+        throw new Error("The updated enquiry was not returned by the server.");
       }
 
       setEnquiries((previous) =>
         previous.map((item) =>
-          String(item._id) === String(enquiryId) ? data.enquiry : item
-        )
+          String(item._id) === String(enquiryId) ? data.enquiry : item,
+        ),
       );
 
       setEnquiryNotes((previous) => ({
@@ -291,7 +286,7 @@ useEffect(() => {
       showSuccess(
         editing
           ? "Customer updated successfully."
-          : "Customer created successfully."
+          : "Customer created successfully.",
       );
     } catch (err) {
       showError(err.message);
@@ -303,7 +298,7 @@ useEffect(() => {
   const deleteCustomer = async (customer) => {
     if (
       !window.confirm(
-        `Delete customer "${customer.name}"?\n\nThis action cannot be undone.`
+        `Delete customer "${customer.name}"?\n\nThis action cannot be undone.`,
       )
     ) {
       return;
@@ -400,16 +395,13 @@ useEffect(() => {
     try {
       setSaving(true);
 
-      await apiRequest(
-        `/api/admin/customers/${editingPayment._id}/payment`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            total: Number(paymentForm.total || 0),
-            paid: Number(paymentForm.paid || 0),
-          }),
-        }
-      );
+      await apiRequest(`/api/admin/customers/${editingPayment._id}/payment`, {
+        method: "PUT",
+        body: JSON.stringify({
+          total: Number(paymentForm.total || 0),
+          paid: Number(paymentForm.paid || 0),
+        }),
+      });
 
       await refreshCustomer(editingPayment._id);
       await loadCustomers();
@@ -443,18 +435,15 @@ useEffect(() => {
     try {
       setSaving(true);
 
-      await apiRequest(
-        `/api/admin/customers/${editingPayment._id}/payment`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            amount,
-            method: recordPaymentForm.method,
-            reference: recordPaymentForm.reference,
-            note: recordPaymentForm.note,
-          }),
-        }
-      );
+      await apiRequest(`/api/admin/customers/${editingPayment._id}/payment`, {
+        method: "PUT",
+        body: JSON.stringify({
+          amount,
+          method: recordPaymentForm.method,
+          reference: recordPaymentForm.reference,
+          note: recordPaymentForm.note,
+        }),
+      });
 
       await refreshCustomer(editingPayment._id);
       await loadCustomers();
@@ -512,7 +501,7 @@ For any queries, please contact our studio.
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
       "_blank",
-      "noopener,noreferrer"
+      "noopener,noreferrer",
     );
   };
 
@@ -547,13 +536,10 @@ For any queries, please contact our studio.
         formData.append("name", documentForm.name.trim());
       }
 
-      await apiRequest(
-        `/api/customers/${editingCustomer._id}/documents`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      await apiRequest(`/api/customers/${editingCustomer._id}/documents`, {
+        method: "POST",
+        body: formData,
+      });
 
       await refreshCustomer(editingCustomer._id);
 
@@ -569,11 +555,7 @@ For any queries, please contact our studio.
   };
 
   const deleteDocument = async (customer, document) => {
-    if (
-      !window.confirm(
-        `Delete "${document.name || "this document"}"?`
-      )
-    ) {
+    if (!window.confirm(`Delete "${document.name || "this document"}"?`)) {
       return;
     }
 
@@ -582,7 +564,7 @@ For any queries, please contact our studio.
 
       await apiRequest(
         `/api/customers/${customer._id}/documents/${document._id}`,
-        { method: "DELETE" }
+        { method: "DELETE" },
       );
 
       await refreshCustomer(customer._id);
@@ -611,7 +593,7 @@ For any queries, please contact our studio.
 
         return result;
       },
-      { totalRevenue: 0, totalPaid: 0, totalBalance: 0 }
+      { totalRevenue: 0, totalPaid: 0, totalBalance: 0 },
     );
 
     return {
@@ -619,7 +601,7 @@ For any queries, please contact our studio.
       projects: customers.filter(
         (customer) =>
           customer.project?.name &&
-          customer.project.name !== "No project assigned"
+          customer.project.name !== "No project assigned",
       ).length,
       ...totals,
     };
@@ -655,9 +637,7 @@ For any queries, please contact our studio.
 
           <div className="customer-workspace-title">
             <div className="customer-avatar large">
-              {(selectedCustomer.name || "C")
-                .charAt(0)
-                .toUpperCase()}
+              {(selectedCustomer.name || "C").charAt(0).toUpperCase()}
             </div>
 
             <div>
@@ -721,7 +701,9 @@ For any queries, please contact our studio.
               <span>Client Since</span>
               <strong>
                 {selectedCustomer.clientSince
-                  ? new Date(selectedCustomer.clientSince).toLocaleDateString("en-IN")
+                  ? new Date(selectedCustomer.clientSince).toLocaleDateString(
+                      "en-IN",
+                    )
                   : "—"}
               </strong>
             </div>
@@ -791,7 +773,7 @@ For any queries, please contact our studio.
                 style={{
                   width: `${Math.min(
                     Math.max(Number(project.progress || 0), 0),
-                    100
+                    100,
                   )}%`,
                 }}
               />
@@ -913,8 +895,8 @@ For any queries, please contact our studio.
               <div>▱</div>
               <h3>No Documents</h3>
               <p>
-                Upload agreements, invoices, payment bills and other files
-                for this customer.
+                Upload agreements, invoices, payment bills and other files for
+                this customer.
               </p>
             </div>
           ) : (
@@ -954,7 +936,7 @@ For any queries, please contact our studio.
                               ? document.url
                               : `${API_URL}${document.url}`,
                             "_blank",
-                            "noopener,noreferrer"
+                            "noopener,noreferrer",
                           )
                         }
                       >
@@ -1059,8 +1041,8 @@ For any queries, please contact our studio.
             <div>◎</div>
             <h3>No Customers Yet</h3>
             <p>
-              Add your first customer to start managing projects, payments
-              and documents.
+              Add your first customer to start managing projects, payments and
+              documents.
             </p>
           </div>
         ) : (
@@ -1080,9 +1062,8 @@ For any queries, please contact our studio.
                 {customers.slice(0, 6).map((customer) => {
                   const payment = customer.payment || {};
                   const balance = Math.max(
-                    Number(payment.total || 0) -
-                      Number(payment.paid || 0),
-                    0
+                    Number(payment.total || 0) - Number(payment.paid || 0),
+                    0,
                   );
 
                   return (
@@ -1090,9 +1071,7 @@ For any queries, please contact our studio.
                       <td>
                         <div className="admin-customer-cell">
                           <div className="customer-avatar">
-                            {(customer.name || "C")
-                              .charAt(0)
-                              .toUpperCase()}
+                            {(customer.name || "C").charAt(0).toUpperCase()}
                           </div>
 
                           <div>
@@ -1179,9 +1158,8 @@ For any queries, please contact our studio.
                   const payment = customer.payment || {};
 
                   const balance = Math.max(
-                    Number(payment.total || 0) -
-                      Number(payment.paid || 0),
-                    0
+                    Number(payment.total || 0) - Number(payment.paid || 0),
+                    0,
                   );
 
                   return (
@@ -1189,9 +1167,7 @@ For any queries, please contact our studio.
                       <td>
                         <div className="admin-customer-cell">
                           <div className="customer-avatar">
-                            {(customer.name || "C")
-                              .charAt(0)
-                              .toUpperCase()}
+                            {(customer.name || "C").charAt(0).toUpperCase()}
                           </div>
 
                           <div>
@@ -1300,8 +1276,8 @@ For any queries, please contact our studio.
           <div>✉</div>
           <h3>No Enquiries Yet</h3>
           <p>
-            Enquiries submitted through your website contact form will
-            appear here.
+            Enquiries submitted through your website contact form will appear
+            here.
           </p>
         </div>
       ) : (
@@ -1326,7 +1302,7 @@ For any queries, please contact our studio.
 
                 <span
                   className={`enquiry-status status-${String(
-                    enquiry.status || "New"
+                    enquiry.status || "New",
                   )
                     .toLowerCase()
                     .replace(/[^a-z]+/g, "-")}`}
@@ -1338,17 +1314,13 @@ For any queries, please contact our studio.
               <div className="admin-enquiry-details">
                 <div>
                   <span>PHONE</span>
-                  <a href={`tel:${enquiry.phone}`}>
-                    {enquiry.phone || "—"}
-                  </a>
+                  <a href={`tel:${enquiry.phone}`}>{enquiry.phone || "—"}</a>
                 </div>
 
                 <div>
                   <span>EMAIL</span>
                   {enquiry.email ? (
-                    <a href={`mailto:${enquiry.email}`}>
-                      {enquiry.email}
-                    </a>
+                    <a href={`mailto:${enquiry.email}`}>{enquiry.email}</a>
                   ) : (
                     <strong>—</strong>
                   )}
@@ -1360,7 +1332,7 @@ For any queries, please contact our studio.
                     {enquiry.eventDate
                       ? new Date(enquiry.eventDate).toLocaleDateString(
                           "en-IN",
-                          { timeZone: "UTC" }
+                          { timeZone: "UTC" },
                         )
                       : "Not specified"}
                   </strong>
@@ -1407,9 +1379,7 @@ For any queries, please contact our studio.
                     maxLength={3000}
                     placeholder="Add a follow-up note..."
                     value={
-                      enquiryNotes[enquiry._id] ??
-                      enquiry.internalNotes ??
-                      ""
+                      enquiryNotes[enquiry._id] ?? enquiry.internalNotes ?? ""
                     }
                     onChange={(event) =>
                       setEnquiryNotes((previous) => ({
@@ -1467,8 +1437,8 @@ For any queries, please contact our studio.
         <h2>Administrator</h2>
 
         <p>
-          Manage customers, projects, payments and documents from one
-          secure workspace.
+          Manage customers, projects, payments and documents from one secure
+          workspace.
         </p>
 
         <div className="profile-security-note">
@@ -1477,8 +1447,8 @@ For any queries, please contact our studio.
           <div>
             <strong>Secure Admin Access</strong>
             <p>
-              Customer payment details and documents are controlled by
-              the administrator. Customers only receive view access.
+              Customer payment details and documents are controlled by the
+              administrator. Customers only receive view access.
             </p>
           </div>
         </div>
@@ -1499,267 +1469,278 @@ For any queries, please contact our studio.
      CUSTOMER MODAL
   ========================================================= */
 
-  const renderCustomerModal = () => !showCustomerModal ? null : (
-    <div
-      className="admin-modal-overlay"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget && !saving) {
-          setShowCustomerModal(false);
-        }
-      }}
-    >
-      <div className="admin-modal">
-        <button
-          type="button"
-          className="admin-modal-close"
-          onClick={() => setShowCustomerModal(false)}
-          aria-label="Close modal"
-        >
-          ×
-        </button>
+  const renderCustomerModal = () =>
+    !showCustomerModal ? null : (
+      <div
+        className="admin-modal-overlay"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget && !saving) {
+            setShowCustomerModal(false);
+          }
+        }}
+      >
+        <div className="admin-modal">
+          <button
+            type="button"
+            className="admin-modal-close"
+            onClick={() => setShowCustomerModal(false)}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
 
-        <div className="modal-heading">
-          <span>
-            {editingCustomer ? "CUSTOMER MANAGEMENT" : "NEW CUSTOMER"}
-          </span>
+          <div className="modal-heading">
+            <span>
+              {editingCustomer ? "CUSTOMER MANAGEMENT" : "NEW CUSTOMER"}
+            </span>
 
-          <h2>{editingCustomer ? "Edit Customer" : "Add Customer"}</h2>
-          <p>Enter the customer's account information.</p>
-        </div>
-
-        <form className="admin-form" onSubmit={saveCustomer}>
-          <div className="admin-form-group">
-            <label htmlFor="customer-name">FULL NAME</label>
-            <input
-              id="customer-name"
-              type="text"
-              value={customerForm.name}
-              onChange={(event) =>
-                setCustomerForm({ ...customerForm, name: event.target.value })
-              }
-              placeholder="Customer name"
-              required
-            />
+            <h2>{editingCustomer ? "Edit Customer" : "Add Customer"}</h2>
+            <p>Enter the customer's account information.</p>
           </div>
 
-          <div className="admin-form-group">
-            <label htmlFor="customer-email">EMAIL</label>
-            <input
-              id="customer-email"
-              type="email"
-              value={customerForm.email}
-              onChange={(event) =>
-                setCustomerForm({ ...customerForm, email: event.target.value })
-              }
-              placeholder="customer@email.com"
-              required
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="customer-phone">PHONE</label>
-            <input
-              id="customer-phone"
-              type="tel"
-              value={customerForm.phone}
-              onChange={(event) =>
-                setCustomerForm({ ...customerForm, phone: event.target.value })
-              }
-              placeholder="+91 XXXXX XXXXX"
-            />
-          </div>
-
-          {!editingCustomer && (
+          <form className="admin-form" onSubmit={saveCustomer}>
             <div className="admin-form-group">
-              <label htmlFor="customer-password">PASSWORD</label>
+              <label htmlFor="customer-name">FULL NAME</label>
               <input
-                id="customer-password"
-                type="password"
-                value={customerForm.password}
+                id="customer-name"
+                type="text"
+                value={customerForm.name}
                 onChange={(event) =>
-                  setCustomerForm({
-                    ...customerForm,
-                    password: event.target.value,
-                  })
+                  setCustomerForm({ ...customerForm, name: event.target.value })
                 }
-                placeholder="Customer login password"
+                placeholder="Customer name"
                 required
               />
             </div>
-          )}
 
-          {editingCustomer && (
-            <div className="profile-security-note">
-              <span>i</span>
-              <div>
-                <strong>Password protected</strong>
-                <p>
-                  The existing customer password is not displayed or
-                  exposed here.
-                </p>
-              </div>
+            <div className="admin-form-group">
+              <label htmlFor="customer-email">EMAIL</label>
+              <input
+                id="customer-email"
+                type="email"
+                value={customerForm.email}
+                onChange={(event) =>
+                  setCustomerForm({
+                    ...customerForm,
+                    email: event.target.value,
+                  })
+                }
+                placeholder="customer@email.com"
+                required
+              />
             </div>
-          )}
 
-          <div className="admin-modal-buttons">
-            <button
-              type="button"
-              className="admin-secondary-button"
-              onClick={() => setShowCustomerModal(false)}
-              disabled={saving}
-            >
-              Cancel
-            </button>
+            <div className="admin-form-group">
+              <label htmlFor="customer-phone">PHONE</label>
+              <input
+                id="customer-phone"
+                type="tel"
+                value={customerForm.phone}
+                onChange={(event) =>
+                  setCustomerForm({
+                    ...customerForm,
+                    phone: event.target.value,
+                  })
+                }
+                placeholder="+91 XXXXX XXXXX"
+              />
+            </div>
 
-            <button
-              type="submit"
-              className="admin-primary-button"
-              disabled={saving}
-            >
-              {saving
-                ? "Saving..."
-                : editingCustomer
-                  ? "Save Changes"
-                  : "Create Customer"}
-            </button>
-          </div>
-        </form>
+            {!editingCustomer && (
+              <div className="admin-form-group">
+                <label htmlFor="customer-password">PASSWORD</label>
+                <input
+                  id="customer-password"
+                  type="password"
+                  value={customerForm.password}
+                  onChange={(event) =>
+                    setCustomerForm({
+                      ...customerForm,
+                      password: event.target.value,
+                    })
+                  }
+                  placeholder="Customer login password"
+                  required
+                />
+              </div>
+            )}
+
+            {editingCustomer && (
+              <div className="profile-security-note">
+                <span>i</span>
+                <div>
+                  <strong>Password protected</strong>
+                  <p>
+                    The existing customer password is not displayed or exposed
+                    here.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="admin-modal-buttons">
+              <button
+                type="button"
+                className="admin-secondary-button"
+                onClick={() => setShowCustomerModal(false)}
+                disabled={saving}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="admin-primary-button"
+                disabled={saving}
+              >
+                {saving
+                  ? "Saving..."
+                  : editingCustomer
+                    ? "Save Changes"
+                    : "Create Customer"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
 
   /* =========================================================
      PROJECT MODAL
   ========================================================= */
 
-  const renderProjectModal = () => !showProjectModal ? null : (
-    <div
-      className="admin-modal-overlay"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget && !saving) {
-          setShowProjectModal(false);
-        }
-      }}
-    >
-      <div className="admin-modal">
-        <button
-          type="button"
-          className="admin-modal-close"
-          onClick={() => setShowProjectModal(false)}
-          aria-label="Close modal"
-        >
-          ×
-        </button>
+  const renderProjectModal = () =>
+    !showProjectModal ? null : (
+      <div
+        className="admin-modal-overlay"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget && !saving) {
+            setShowProjectModal(false);
+          }
+        }}
+      >
+        <div className="admin-modal">
+          <button
+            type="button"
+            className="admin-modal-close"
+            onClick={() => setShowProjectModal(false)}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
 
-        <div className="modal-heading">
-          <span>PROJECT MANAGEMENT</span>
-          <h2>Edit Project</h2>
-          <p>Update the complete project information for this customer.</p>
-        </div>
-
-        <form className="admin-form" onSubmit={saveProject}>
-          <div className="admin-form-group">
-            <label htmlFor="project-name">PROJECT NAME</label>
-            <input
-              id="project-name"
-              type="text"
-              value={projectForm.name}
-              onChange={(event) =>
-                setProjectForm({ ...projectForm, name: event.target.value })
-              }
-              placeholder="Project name"
-            />
+          <div className="modal-heading">
+            <span>PROJECT MANAGEMENT</span>
+            <h2>Edit Project</h2>
+            <p>Update the complete project information for this customer.</p>
           </div>
 
-          <div className="admin-form-group">
-            <label htmlFor="project-type">PROJECT TYPE</label>
-            <input
-              id="project-type"
-              type="text"
-              value={projectForm.type}
-              onChange={(event) =>
-                setProjectForm({ ...projectForm, type: event.target.value })
-              }
-              placeholder="Wedding Photography"
-            />
-          </div>
-
-          <div className="customer-detail-grid">
+          <form className="admin-form" onSubmit={saveProject}>
             <div className="admin-form-group">
-              <label htmlFor="project-date">EVENT DATE</label>
+              <label htmlFor="project-name">PROJECT NAME</label>
               <input
-                id="project-date"
-                type="date"
-                value={projectForm.eventDate}
+                id="project-name"
+                type="text"
+                value={projectForm.name}
+                onChange={(event) =>
+                  setProjectForm({ ...projectForm, name: event.target.value })
+                }
+                placeholder="Project name"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="project-type">PROJECT TYPE</label>
+              <input
+                id="project-type"
+                type="text"
+                value={projectForm.type}
+                onChange={(event) =>
+                  setProjectForm({ ...projectForm, type: event.target.value })
+                }
+                placeholder="Wedding Photography"
+              />
+            </div>
+
+            <div className="customer-detail-grid">
+              <div className="admin-form-group">
+                <label htmlFor="project-date">EVENT DATE</label>
+                <input
+                  id="project-date"
+                  type="date"
+                  value={projectForm.eventDate}
+                  onChange={(event) =>
+                    setProjectForm({
+                      ...projectForm,
+                      eventDate: event.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="project-status">STATUS</label>
+                <select
+                  id="project-status"
+                  value={projectForm.status}
+                  onChange={(event) =>
+                    setProjectForm({
+                      ...projectForm,
+                      status: event.target.value,
+                    })
+                  }
+                >
+                  <option value="NOT STARTED">NOT STARTED</option>
+                  <option value="IN PROGRESS">IN PROGRESS</option>
+                  <option value="COMPLETED">COMPLETED</option>
+                  <option value="PENDING">PENDING</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="admin-form-group">
+              <div className="form-label-row">
+                <label htmlFor="project-progress">PROJECT PROGRESS</label>
+                <strong>{projectForm.progress}%</strong>
+              </div>
+
+              <input
+                id="project-progress"
+                type="range"
+                min="0"
+                max="100"
+                value={projectForm.progress}
                 onChange={(event) =>
                   setProjectForm({
                     ...projectForm,
-                    eventDate: event.target.value,
+                    progress: Number(event.target.value),
                   })
                 }
               />
             </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="project-status">STATUS</label>
-              <select
-                id="project-status"
-                value={projectForm.status}
-                onChange={(event) =>
-                  setProjectForm({ ...projectForm, status: event.target.value })
-                }
+            <div className="admin-modal-buttons">
+              <button
+                type="button"
+                className="admin-secondary-button"
+                onClick={() => setShowProjectModal(false)}
+                disabled={saving}
               >
-                <option value="NOT STARTED">NOT STARTED</option>
-                <option value="IN PROGRESS">IN PROGRESS</option>
-                <option value="COMPLETED">COMPLETED</option>
-                <option value="PENDING">PENDING</option>
-              </select>
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="admin-primary-button"
+                disabled={saving}
+              >
+                {saving ? "Saving..." : "Save Project"}
+              </button>
             </div>
-          </div>
-
-          <div className="admin-form-group">
-            <div className="form-label-row">
-              <label htmlFor="project-progress">PROJECT PROGRESS</label>
-              <strong>{projectForm.progress}%</strong>
-            </div>
-
-            <input
-              id="project-progress"
-              type="range"
-              min="0"
-              max="100"
-              value={projectForm.progress}
-              onChange={(event) =>
-                setProjectForm({
-                  ...projectForm,
-                  progress: Number(event.target.value),
-                })
-              }
-            />
-          </div>
-
-          <div className="admin-modal-buttons">
-            <button
-              type="button"
-              className="admin-secondary-button"
-              onClick={() => setShowProjectModal(false)}
-              disabled={saving}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="admin-primary-button"
-              disabled={saving}
-            >
-              {saving ? "Saving..." : "Save Project"}
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
 
   /* =========================================================
      PAYMENT MODAL
@@ -1871,217 +1852,219 @@ For any queries, please contact our studio.
      RECORD PAYMENT MODAL
   ========================================================= */
 
-  const renderRecordPaymentModal = () => !showRecordPaymentModal ? null : (
-    <div
-      className="admin-modal-overlay"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget && !saving) {
-          setShowRecordPaymentModal(false);
-        }
-      }}
-    >
-      <div className="admin-modal">
-        <button
-          type="button"
-          className="admin-modal-close"
-          onClick={() => setShowRecordPaymentModal(false)}
-          aria-label="Close modal"
-        >
-          ×
-        </button>
+  const renderRecordPaymentModal = () =>
+    !showRecordPaymentModal ? null : (
+      <div
+        className="admin-modal-overlay"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget && !saving) {
+            setShowRecordPaymentModal(false);
+          }
+        }}
+      >
+        <div className="admin-modal">
+          <button
+            type="button"
+            className="admin-modal-close"
+            onClick={() => setShowRecordPaymentModal(false)}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
 
-        <div className="modal-heading">
-          <span>PAYMENT HISTORY</span>
-          <h2>Record Payment</h2>
-          <p>Add a new payment transaction to this customer's history.</p>
+          <div className="modal-heading">
+            <span>PAYMENT HISTORY</span>
+            <h2>Record Payment</h2>
+            <p>Add a new payment transaction to this customer's history.</p>
+          </div>
+
+          <form className="admin-form" onSubmit={saveRecordedPayment}>
+            <div className="admin-form-group">
+              <label htmlFor="record-amount">PAYMENT AMOUNT</label>
+              <input
+                id="record-amount"
+                type="number"
+                min="1"
+                value={recordPaymentForm.amount}
+                onChange={(event) =>
+                  setRecordPaymentForm({
+                    ...recordPaymentForm,
+                    amount: event.target.value,
+                  })
+                }
+                placeholder="Enter amount"
+                required
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="record-method">PAYMENT METHOD</label>
+              <select
+                id="record-method"
+                value={recordPaymentForm.method}
+                onChange={(event) =>
+                  setRecordPaymentForm({
+                    ...recordPaymentForm,
+                    method: event.target.value,
+                  })
+                }
+              >
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="Card">Card</option>
+                <option value="Razorpay">Razorpay</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="record-reference">REFERENCE</label>
+              <input
+                id="record-reference"
+                type="text"
+                value={recordPaymentForm.reference}
+                onChange={(event) =>
+                  setRecordPaymentForm({
+                    ...recordPaymentForm,
+                    reference: event.target.value,
+                  })
+                }
+                placeholder="Transaction/reference number"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="record-note">NOTE</label>
+              <textarea
+                id="record-note"
+                value={recordPaymentForm.note}
+                onChange={(event) =>
+                  setRecordPaymentForm({
+                    ...recordPaymentForm,
+                    note: event.target.value,
+                  })
+                }
+                placeholder="Optional payment note"
+              />
+            </div>
+
+            <div className="admin-modal-buttons">
+              <button
+                type="button"
+                className="admin-secondary-button"
+                onClick={() => setShowRecordPaymentModal(false)}
+                disabled={saving}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="admin-primary-button"
+                disabled={saving}
+              >
+                {saving ? "Recording..." : "Record Payment"}
+              </button>
+            </div>
+          </form>
         </div>
-
-        <form className="admin-form" onSubmit={saveRecordedPayment}>
-          <div className="admin-form-group">
-            <label htmlFor="record-amount">PAYMENT AMOUNT</label>
-            <input
-              id="record-amount"
-              type="number"
-              min="1"
-              value={recordPaymentForm.amount}
-              onChange={(event) =>
-                setRecordPaymentForm({
-                  ...recordPaymentForm,
-                  amount: event.target.value,
-                })
-              }
-              placeholder="Enter amount"
-              required
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="record-method">PAYMENT METHOD</label>
-            <select
-              id="record-method"
-              value={recordPaymentForm.method}
-              onChange={(event) =>
-                setRecordPaymentForm({
-                  ...recordPaymentForm,
-                  method: event.target.value,
-                })
-              }
-            >
-              <option value="Cash">Cash</option>
-              <option value="UPI">UPI</option>
-              <option value="Bank Transfer">Bank Transfer</option>
-              <option value="Card">Card</option>
-              <option value="Razorpay">Razorpay</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="record-reference">REFERENCE</label>
-            <input
-              id="record-reference"
-              type="text"
-              value={recordPaymentForm.reference}
-              onChange={(event) =>
-                setRecordPaymentForm({
-                  ...recordPaymentForm,
-                  reference: event.target.value,
-                })
-              }
-              placeholder="Transaction/reference number"
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="record-note">NOTE</label>
-            <textarea
-              id="record-note"
-              value={recordPaymentForm.note}
-              onChange={(event) =>
-                setRecordPaymentForm({
-                  ...recordPaymentForm,
-                  note: event.target.value,
-                })
-              }
-              placeholder="Optional payment note"
-            />
-          </div>
-
-          <div className="admin-modal-buttons">
-            <button
-              type="button"
-              className="admin-secondary-button"
-              onClick={() => setShowRecordPaymentModal(false)}
-              disabled={saving}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="admin-primary-button"
-              disabled={saving}
-            >
-              {saving ? "Recording..." : "Record Payment"}
-            </button>
-          </div>
-        </form>
       </div>
-    </div>
-  );
+    );
 
   /* =========================================================
      DOCUMENT MODAL
   ========================================================= */
 
-  const renderDocumentModal = () => !showDocumentModal ? null : (
-    <div
-      className="admin-modal-overlay"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget && !saving) {
-          setShowDocumentModal(false);
-        }
-      }}
-    >
-      <div className="admin-modal">
-        <button
-          type="button"
-          className="admin-modal-close"
-          onClick={() => setShowDocumentModal(false)}
-          aria-label="Close modal"
-        >
-          ×
-        </button>
+  const renderDocumentModal = () =>
+    !showDocumentModal ? null : (
+      <div
+        className="admin-modal-overlay"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget && !saving) {
+            setShowDocumentModal(false);
+          }
+        }}
+      >
+        <div className="admin-modal">
+          <button
+            type="button"
+            className="admin-modal-close"
+            onClick={() => setShowDocumentModal(false)}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
 
-        <div className="modal-heading">
-          <span>DOCUMENT MANAGEMENT</span>
-          <h2>Upload Document</h2>
-          <p>Add a PDF, JPG, JPEG or PNG file for this customer.</p>
-        </div>
-
-        <form className="admin-form" onSubmit={uploadDocument}>
-          <div className="admin-form-group">
-            <label htmlFor="document-name">DOCUMENT NAME</label>
-            <input
-              id="document-name"
-              type="text"
-              value={documentForm.name}
-              onChange={(event) =>
-                setDocumentForm({
-                  ...documentForm,
-                  name: event.target.value,
-                })
-              }
-              placeholder="Agreement / Invoice / Bill"
-            />
+          <div className="modal-heading">
+            <span>DOCUMENT MANAGEMENT</span>
+            <h2>Upload Document</h2>
+            <p>Add a PDF, JPG, JPEG or PNG file for this customer.</p>
           </div>
 
-          <div className="document-file-dropzone">
-            <div className="upload-icon">↑</div>
-            <strong>Choose a document</strong>
-            <span>PDF, JPG, JPEG or PNG · Maximum 10 MB</span>
-
-            <input
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              onChange={(event) =>
-                setDocumentForm({
-                  ...documentForm,
-                  file: event.target.files?.[0] || null,
-                })
-              }
-              aria-label="Choose a document"
-            />
-          </div>
-
-          {documentForm.file && (
-            <div className="selected-file-preview">
-              Selected: {documentForm.file.name}
+          <form className="admin-form" onSubmit={uploadDocument}>
+            <div className="admin-form-group">
+              <label htmlFor="document-name">DOCUMENT NAME</label>
+              <input
+                id="document-name"
+                type="text"
+                value={documentForm.name}
+                onChange={(event) =>
+                  setDocumentForm({
+                    ...documentForm,
+                    name: event.target.value,
+                  })
+                }
+                placeholder="Agreement / Invoice / Bill"
+              />
             </div>
-          )}
 
-          <div className="admin-modal-buttons">
-            <button
-              type="button"
-              className="admin-secondary-button"
-              onClick={() => setShowDocumentModal(false)}
-              disabled={saving}
-            >
-              Cancel
-            </button>
+            <div className="document-file-dropzone">
+              <div className="upload-icon">↑</div>
+              <strong>Choose a document</strong>
+              <span>PDF, JPG, JPEG or PNG · Maximum 10 MB</span>
 
-            <button
-              type="submit"
-              className="admin-primary-button"
-              disabled={saving || !documentForm.file}
-            >
-              {saving ? "Uploading..." : "Upload Document"}
-            </button>
-          </div>
-        </form>
+              <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                onChange={(event) =>
+                  setDocumentForm({
+                    ...documentForm,
+                    file: event.target.files?.[0] || null,
+                  })
+                }
+                aria-label="Choose a document"
+              />
+            </div>
+
+            {documentForm.file && (
+              <div className="selected-file-preview">
+                Selected: {documentForm.file.name}
+              </div>
+            )}
+
+            <div className="admin-modal-buttons">
+              <button
+                type="button"
+                className="admin-secondary-button"
+                onClick={() => setShowDocumentModal(false)}
+                disabled={saving}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="admin-primary-button"
+                disabled={saving || !documentForm.file}
+              >
+                {saving ? "Uploading..." : "Upload Document"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
 
   /* =========================================================
      MAIN RENDER
@@ -2116,9 +2099,7 @@ For any queries, please contact our studio.
           <button
             type="button"
             className={
-              activeSection === "dashboard" && !selectedCustomer
-                ? "active"
-                : ""
+              activeSection === "dashboard" && !selectedCustomer ? "active" : ""
             }
             onClick={() => {
               setSelectedCustomer(null);
@@ -2132,9 +2113,7 @@ For any queries, please contact our studio.
           <button
             type="button"
             className={
-              activeSection === "customers" && !selectedCustomer
-                ? "active"
-                : ""
+              activeSection === "customers" && !selectedCustomer ? "active" : ""
             }
             onClick={() => {
               setSelectedCustomer(null);
@@ -2148,9 +2127,7 @@ For any queries, please contact our studio.
           <button
             type="button"
             className={
-              activeSection === "enquiries" && !selectedCustomer
-                ? "active"
-                : ""
+              activeSection === "enquiries" && !selectedCustomer ? "active" : ""
             }
             onClick={() => {
               setSelectedCustomer(null);
@@ -2165,9 +2142,7 @@ For any queries, please contact our studio.
           <button
             type="button"
             className={
-              activeSection === "profile" && !selectedCustomer
-                ? "active"
-                : ""
+              activeSection === "profile" && !selectedCustomer ? "active" : ""
             }
             onClick={() => {
               setSelectedCustomer(null);
@@ -2191,9 +2166,7 @@ For any queries, please contact our studio.
       <main className="admin-main">
         <header className="admin-header">
           <div>
-            <span className="admin-header-eyebrow">
-              INFINITY PIXEL STUDIOS
-            </span>
+            <span className="admin-header-eyebrow">INFINITY PIXEL STUDIOS</span>
             <h1>Admin Portal</h1>
             <p>Manage your studio operations from one place.</p>
           </div>
