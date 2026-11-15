@@ -1,9 +1,9 @@
 import logo from "@/assets/brand/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/pages/AdminLogin.css";
+import "./AdminLogin.css";
 
-import { apiRequest } from "../../services/adminService";
+import { apiRequest } from "@/features/admin/services/adminService";
 
 function AdminLogin() {
   const navigate = useNavigate();

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/pages/AdminDashboard.css";
+import "./AdminDashboard.css";
 import logo from "@/assets/brand/logo.png";
 
-import { API_URL, apiRequest } from "../../services/adminService";
+import { API_URL, apiRequest } from "@/features/admin/services/adminService";
 
 const emptyCustomer = { name: "", email: "", phone: "", password: "" };
 const emptyProject = {
