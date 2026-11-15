@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/brand/logo1.png";
-import "./ForgotPassword.css";
 
 import {
   sendPasswordResetOtp,

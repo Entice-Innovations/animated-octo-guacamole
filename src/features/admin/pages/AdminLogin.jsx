@@ -1,7 +1,6 @@
 import logo from "@/assets/brand/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AdminLogin.css";
 
 import { apiRequest } from "@/services/adminService";
 

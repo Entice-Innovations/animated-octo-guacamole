@@ -1,0 +1,15 @@
+/* Single entry point for all styles. Order matters (all CSS is global). */
+@import "./components/Navbar.css";
+@import "./components/Hero.css";
+@import "./components/About.css";
+@import "./components/Services.css";
+@import "./components/Gallery.css";
+@import "./components/Contact.css";
+@import "./components/Footer.css";
+@import "./pages/Login.css";
+@import "./pages/Signup.css";
+@import "./pages/ForgotPassword.css";
+@import "./pages/CustomerDashboard.css";
+@import "./pages/AdminLogin.css";
+@import "./pages/AdminDashboard.css";
+@import "./global.css";

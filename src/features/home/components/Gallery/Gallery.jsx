@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import "./Gallery.css";
 
 import hinduWedding from "@/assets/gallery/hindu.jpeg";
 import aestheticWedding from "@/assets/gallery/asethetic.jpeg";

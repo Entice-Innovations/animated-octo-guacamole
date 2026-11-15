@@ -7,7 +7,6 @@ import ForgotPassword from "@/features/auth/pages/ForgotPassword";
 import CustomerDashboard from "@/features/customer/pages/CustomerDashboard";
 import AdminLogin from "@/features/admin/pages/AdminLogin";
 import AdminDashboard from "@/features/admin/pages/AdminDashboard";
-import "./App.css";
 
 export function AppRoutes() {
   return (

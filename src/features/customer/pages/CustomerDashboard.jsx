@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import logo from "@/assets/brand/logo1.png";
-import "./CustomerDashboard.css";
 
 // =====================================================
 // LOAD RAZORPAY CHECKOUT

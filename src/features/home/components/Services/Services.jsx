@@ -1,5 +1,3 @@
-import "./Services.css";
-
 import engagement from "@/assets/services/engagement.jpeg";
 import bridal from "@/assets/services/bridal.jpeg";
 import coupleshoot from "@/assets/services/coupleshoot.jpeg";
