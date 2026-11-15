@@ -9,4 +9,4 @@ Disallow: /signup
 Disallow: /forgot-password
 
 # Uncomment and set your real domain once the site is live:
-# Sitemap: https://www.your-domain.com/sitemap.xml
+# Sitemap: sitemap.xml
