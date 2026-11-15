@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/brand/logo1.png";
-import "../styles/pages/Login.css";
-import { loginCustomer } from "../services/customerService";
+import "./Login.css";
+import { loginCustomer } from "@/features/auth/services/customerService";
 
 function Login() {
   const navigate = useNavigate();

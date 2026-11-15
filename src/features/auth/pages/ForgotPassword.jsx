@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/brand/logo1.png";
-import "../styles/pages/ForgotPassword.css";
+import "./ForgotPassword.css";
 
 import {
   sendPasswordResetOtp,
   verifyPasswordResetOtp,
   resetCustomerPassword,
-} from "../services/customerService";
+} from "@/features/auth/services/customerService";
 
 function ForgotPassword() {
   const navigate = useNavigate();
