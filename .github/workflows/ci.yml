@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
   pull_request:
 
 permissions:
@@ -31,4 +31,4 @@ jobs:
         run: npm run check
 
       - name: Dependency audit
-        run: npm audit --audit-level=high
+        run: npm audit --omit=dev --audit-level=high

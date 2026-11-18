@@ -146,7 +146,7 @@ function AdminDashboard() {
     if (!customerId) return;
 
     try {
-      const data = await apiRequest(`/api/customers/${customerId}`);
+      const data = await apiRequest(`/api/admin/customers/${customerId}`);
       const customer = data.customer || data.data || data;
 
       setSelectedCustomer(customer);
@@ -260,8 +260,8 @@ function AdminDashboard() {
       const editing = Boolean(editingCustomer);
 
       const data = editing
-        ? await apiRequest(`/api/customers/${editingCustomer._id}`, {
-            method: "PUT",
+        ? await apiRequest(`/api/admin/customers/${editingCustomer._id}`, {
+            method: "POST",
             body: JSON.stringify({
               name: customerForm.name,
               email: customerForm.email,
@@ -306,7 +306,7 @@ function AdminDashboard() {
     try {
       setSaving(true);
 
-      await apiRequest(`/api/customers/${customer._id}`, {
+      await apiRequest(`/api/admin/customers/${customer._id}`, {
         method: "DELETE",
       });
 
@@ -351,7 +351,7 @@ function AdminDashboard() {
     try {
       setSaving(true);
 
-      await apiRequest(`/api/customers/${editingProject._id}/project`, {
+      await apiRequest(`/api/admin/customers/${editingProject._id}/project`, {
         method: "PUT",
         body: JSON.stringify({
           ...projectForm,
@@ -535,10 +535,13 @@ For any queries, please contact our studio.
         formData.append("name", documentForm.name.trim());
       }
 
-      await apiRequest(`/api/customers/${editingCustomer._id}/documents`, {
-        method: "POST",
-        body: formData,
-      });
+      await apiRequest(
+        `/api/admin/customers/${editingCustomer._id}/documents`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
 
       await refreshCustomer(editingCustomer._id);
 
@@ -562,7 +565,7 @@ For any queries, please contact our studio.
       setSaving(true);
 
       await apiRequest(
-        `/api/customers/${customer._id}/documents/${document._id}`,
+        `/api/admin/customers/${customer._id}/documents/${document._id}`,
         { method: "DELETE" },
       );
 

@@ -111,3 +111,61 @@ export const resetCustomerPassword = async (
 
   return data;
 };
+
+// GET CUSTOMER PROFILE
+export const getCustomerProfile = async (customerId, token) => {
+  const response = await fetch(`${API_URL}/api/customers/${customerId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || data.success !== true) {
+    throw new Error(data.message || "Unable to load customer profile.");
+  }
+
+  return data;
+};
+
+// CREATE RAZORPAY ORDER
+export const createRazorpayOrder = async (amount, token) => {
+  const response = await fetch(`${API_URL}/api/payments/create-order`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ amount }),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || data.success !== true) {
+    throw new Error(data.message || "Unable to create payment order.");
+  }
+
+  return data;
+};
+
+// VERIFY RAZORPAY PAYMENT
+export const verifyRazorpayPayment = async (razorpayResponse, token) => {
+  const response = await fetch(`${API_URL}/api/payments/verify-payment`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(razorpayResponse),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || data.success !== true) {
+    throw new Error(data.message || "Payment verification failed.");
+  }
+
+  return data;
+};
